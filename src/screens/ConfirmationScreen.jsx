@@ -83,8 +83,7 @@ export default function ConfirmationScreen({ direction, fdConfig, rate, goTo }) 
         </div>
 
         <div className="dual-cta">
-          <CtaButton variant="primary" className="small-cta">Track Application</CtaButton>
-          <CtaButton variant="outline" className="small-cta" onClick={() => goTo(1)}>Home</CtaButton>
+          <CtaButton variant="primary" className="small-cta" onClick={() => goTo(1)}>Back to Home</CtaButton>
         </div>
       </div>
     </ScreenWrapper>

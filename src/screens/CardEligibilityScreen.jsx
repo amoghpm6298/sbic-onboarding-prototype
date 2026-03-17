@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
+import ScreenWrapper, { CtaButton } from '../components/ScreenWrapper'
 import './CardEligibilityScreen.css'
 
 function fmtINR(n) {
@@ -40,10 +40,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext, 
       direction={direction}
       dark
       bottomBar={
-        <>
-          <BackButton onClick={onBack} />
-          <CtaButton onClick={onNext}>Apply for Card</CtaButton>
-        </>
+        <CtaButton onClick={onNext}>Avail Card</CtaButton>
       }
     >
       <motion.h1

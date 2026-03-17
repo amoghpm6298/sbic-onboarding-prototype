@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
+import ScreenWrapper, { CtaButton } from '../components/ScreenWrapper'
 import './PaymentScreen.css'
 
 function fmtINR(n) {
@@ -34,10 +34,7 @@ export default function PaymentScreen({ direction, fdConfig, rate, creditLimit, 
       <ScreenWrapper
         direction={direction}
         bottomBar={
-          <>
-            <BackButton onClick={onBack} />
-            <CtaButton onClick={() => setPhase('processing')}>Pay {fmtINR(fdConfig.amount)}</CtaButton>
-          </>
+          <CtaButton onClick={() => setPhase('processing')}>Pay {fmtINR(fdConfig.amount)}</CtaButton>
         }
       >
         <h1>Complete your payment</h1>

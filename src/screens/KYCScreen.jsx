@@ -248,7 +248,7 @@ export default function KYCScreen({ direction, onNext, onBack }) {
   return (
     <ScreenWrapper
       direction={direction}
-      bottomBar={<CtaButton onClick={onNext}>Continue</CtaButton>}
+      bottomBar={<CtaButton onClick={onNext}>Continue to Payment</CtaButton>}
     >
       <div className="kyc-success">
         <motion.div
