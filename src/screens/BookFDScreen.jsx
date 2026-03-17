@@ -28,11 +28,11 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
       bottomBar={
         <>
           <BackButton onClick={onBack} />
-          <CtaButton onClick={onNext}>Book FD & Continue</CtaButton>
+          <CtaButton onClick={onNext}>Continue</CtaButton>
         </>
       }
     >
-      <h1>Book Your Fixed Deposit</h1>
+      <h1>Select FD Details</h1>
       <p className="helper-text">Your credit limit will be 80% of the FD amount.</p>
 
       <div className="section-title">Select Bank</div>

@@ -5,11 +5,12 @@ import Stepper from './components/Stepper'
 import EntryScreen from './screens/EntryScreen'
 import BookFDScreen from './screens/BookFDScreen'
 import KYCScreen from './screens/KYCScreen'
+import PaymentScreen from './screens/PaymentScreen'
 import CardEligibilityScreen from './screens/CardEligibilityScreen'
 import ConfirmationScreen from './screens/ConfirmationScreen'
 import './App.css'
 
-const STEPS = ['Start', 'Book FD', 'Video KYC', 'Card', 'Done']
+const STEPS = ['Start', 'FD Details', 'Video KYC', 'Pay & Book', 'Card', 'Done']
 
 const RATES = {
   SBI: { 1: 6.80, 2: 7.10, 3: 7.25, 5: 6.50 },
@@ -32,7 +33,7 @@ export default function App() {
   })
 
   const goTo = useCallback((s) => {
-    if (s < 1 || s > 5) return
+    if (s < 1 || s > 6) return
     setDirection(s > step ? 1 : -1)
     setStep(s)
   }, [step])
@@ -49,8 +50,10 @@ export default function App() {
     2: <BookFDScreen key="fd" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
          rate={rate} creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
     3: <KYCScreen key="kyc" direction={direction} onNext={next} onBack={back} />,
-    4: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit} onNext={next} onBack={back} />,
-    5: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={goTo} />,
+    4: <PaymentScreen key="pay" direction={direction} fdConfig={fdConfig} rate={rate}
+         creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
+    5: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit} onNext={next} onBack={back} />,
+    6: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={goTo} />,
   }
 
   return (

@@ -1,0 +1,269 @@
+.pay-summary-card {
+  background: #292075;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.pay-sum-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.pay-sum-row:last-child { border-bottom: none; }
+.psl { opacity: 0.65; font-weight: 500; }
+.psv { font-weight: 700; }
+.pay-sum-row.highlight .psv { color: #5ee8a0; font-size: 15px; }
+
+/* Method tabs */
+.method-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid #e0e0e0;
+}
+
+.method-tab {
+  flex: 1;
+  padding: 12px 8px;
+  border: none;
+  background: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.method-tab + .method-tab {
+  border-left: 1.5px solid #e0e0e0;
+}
+
+.method-tab.active {
+  background: #292075;
+  color: #fff;
+}
+
+/* UPI apps */
+.upi-apps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.upi-app {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  width: 100%;
+  text-align: left;
+}
+.upi-app:hover { border-color: #ccc; }
+.upi-app.active {
+  border-color: #292075;
+  background: #f0eef8;
+}
+
+.upi-app-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.upi-app-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+.upi-app.active .upi-app-name { color: #292075; }
+
+.upi-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.upi-app.active .upi-radio { border-color: #292075; }
+.upi-radio-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #292075;
+}
+
+/* Net banking */
+.nb-info {
+  margin-bottom: 20px;
+}
+
+.nb-bank-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f8f9fb;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.nb-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* Card form */
+.card-form {
+  margin-bottom: 20px;
+}
+
+.form-field {
+  margin-bottom: 12px;
+}
+
+.ff-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.ff-input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  background: #f8f9fb;
+}
+
+.card-form-row {
+  display: flex;
+  gap: 12px;
+}
+.card-form-row .form-field { flex: 1; }
+
+.secure-badge {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  padding: 8px 0;
+}
+
+/* Processing screen */
+.processing-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.processing-spinner {
+  margin-bottom: 0;
+}
+
+.processing-sub {
+  font-size: 13px;
+  color: #999;
+  margin-top: 8px;
+  margin-bottom: 32px;
+}
+
+.processing-steps {
+  width: 100%;
+  max-width: 260px;
+}
+
+.proc-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ccc;
+  transition: color 0.3s;
+}
+.proc-step.active { color: #cc8800; }
+.proc-step.done { color: #1a8a4a; }
+
+.proc-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  background: #f0f0f0;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+.proc-step.active .proc-icon { background: #fff8e6; color: #cc8800; }
+.proc-step.done .proc-icon { background: #e6f9f0; color: #1a8a4a; }
+
+/* Success */
+.pay-success-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.pay-success-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #e6f9f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pay-success-tag {
+  font-size: 13px;
+  color: #292075;
+  font-weight: 600;
+  background: #f0eef8;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
