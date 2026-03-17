@@ -68,10 +68,13 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
       setOtpError(true)
       return
     }
+    // Blur input to prevent iOS scroll restoration
+    if (document.activeElement) document.activeElement.blur()
     setVerifying(true)
     setTimeout(() => {
       setSheet(null)
-      onNext()
+      // Small delay to let sheet animation complete before navigating
+      setTimeout(() => onNext(), 100)
     }, 1500)
   }
 
@@ -186,7 +189,10 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
                   {otp.map((digit, i) => (
                     <input
                       key={i}
-                      ref={el => otpRefs.current[i] = el}
+                      ref={el => {
+                        otpRefs.current[i] = el
+                        if (i === 0 && el) setTimeout(() => el.focus({ preventScroll: true }), 150)
+                      }}
                       type="tel"
                       inputMode="numeric"
                       maxLength={1}
@@ -194,7 +200,6 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
                       value={digit}
                       onChange={e => handleOtpChange(i, e.target.value)}
                       onKeyDown={e => handleOtpKeyDown(i, e)}
-                      autoFocus={i === 0}
                     />
                   ))}
                 </div>
