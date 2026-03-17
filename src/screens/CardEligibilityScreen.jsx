@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import ScreenWrapper, { CtaButton } from '../components/ScreenWrapper'
 import './CardEligibilityScreen.css'
@@ -118,8 +119,8 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
         ))}
       </div>
 
-      {/* ── T&C Bottom Sheet ── */}
-      <AnimatePresence>
+      {/* ── T&C Bottom Sheet (portal) ── */}
+      {createPortal(<AnimatePresence>
         {sheet === 'tc' && (
           <>
             <motion.div className="sheet-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(null)} />
@@ -161,10 +162,10 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
 
-      {/* ── OTP Bottom Sheet ── */}
-      <AnimatePresence>
+      {/* ── OTP Bottom Sheet (portal) ── */}
+      {createPortal(<AnimatePresence>
         {sheet === 'otp' && (
           <>
             <motion.div className="sheet-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
@@ -224,7 +225,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
     </ScreenWrapper>
   )
 }
