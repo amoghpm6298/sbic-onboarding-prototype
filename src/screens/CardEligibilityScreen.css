@@ -175,11 +175,24 @@
 .tc-body {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 0;
 }
 
 .tc-list {
   flex: 1;
-  margin-bottom: 20px;
+  overflow-y: auto;
+  margin-bottom: 0;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.tc-list::-webkit-scrollbar { display: none; }
+
+.tc-footer {
+  flex-shrink: 0;
+  padding: 16px 0 0;
+  border-top: 1px solid #f0f0f0;
+  background: #fff;
 }
 
 .tc-item {

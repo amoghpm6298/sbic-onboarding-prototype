@@ -10,7 +10,7 @@ import CardEligibilityScreen from './screens/CardEligibilityScreen'
 import ConfirmationScreen from './screens/ConfirmationScreen'
 import './App.css'
 
-const STEPS = ['Start', 'FD Details', 'KYC', 'Book FD', 'Card', 'Done']
+const STEPS = ['FD Details', 'KYC', 'Book FD', 'Card', 'Done']
 
 const RATES = {
   SBI: { 1: 6.80, 2: 7.10, 3: 7.25, 5: 6.50 },
@@ -45,6 +45,10 @@ export default function App() {
   const creditLimit = Math.round(fdConfig.amount * 0.8)
   const maturity = Math.round(fdConfig.amount * Math.pow(1 + rate / 100, fdConfig.tenure))
 
+  // Stepper: step 1 = no stepper (landing), steps 2-6 map to STEPS[0-4]
+  const stepperCurrent = step - 1 // 0 for landing (hidden), 1-5 for rest
+  const showStepper = step > 1
+
   const screens = {
     1: <EntryScreen key="entry" direction={direction} onNext={next} />,
     2: <BookFDScreen key="fd" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
@@ -52,13 +56,13 @@ export default function App() {
     3: <KYCScreen key="kyc" direction={direction} onNext={next} onBack={back} />,
     4: <PaymentScreen key="pay" direction={direction} fdConfig={fdConfig} rate={rate}
          creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
-    5: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit} onNext={next} onBack={back} />,
+    5: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit} onNext={next} />,
     6: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={goTo} />,
   }
 
   return (
     <div className="app-wrapper">
-      <PhoneFrame stepper={<Stepper steps={STEPS} current={step} />}>
+      <PhoneFrame stepper={showStepper ? <Stepper steps={STEPS} current={stepperCurrent} /> : null}>
         <AnimatePresence mode="wait" custom={direction}>
           {screens[step]}
         </AnimatePresence>

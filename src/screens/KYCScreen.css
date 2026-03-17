@@ -66,7 +66,7 @@
   position: relative;
   background: linear-gradient(180deg, #1a1a2e 0%, #2a2a4e 100%);
   flex: 1;
-  min-height: 260px;
+  min-height: 340px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,10 +162,10 @@
 
 /* Status bar */
 .vc-status-bar {
-  padding: 20px 24px;
+  padding: 14px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .vc-status-msg {
@@ -173,7 +173,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #666;
 }
@@ -205,12 +205,12 @@
 .vc-pill {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
+  gap: 8px;
+  padding: 8px 14px;
   background: #f8f9fa;
   border: 1px solid #f0f0f0;
-  border-radius: 12px;
-  font-size: 13px;
+  border-radius: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: #ccc;
   transition: all 0.3s;

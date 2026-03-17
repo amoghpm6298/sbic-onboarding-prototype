@@ -141,24 +141,26 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
                   ))}
                 </div>
 
-                <label className="tc-checkbox-row" onClick={() => setTcAgreed(!tcAgreed)}>
-                  <div className={`tc-checkbox ${tcAgreed ? 'checked' : ''}`}>
-                    {tcAgreed && (
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6L5 9L10 3" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    )}
-                  </div>
-                  <span>I have read and agree to all the Terms & Conditions</span>
-                </label>
+                <div className="tc-footer">
+                  <label className="tc-checkbox-row" onClick={() => setTcAgreed(!tcAgreed)}>
+                    <div className={`tc-checkbox ${tcAgreed ? 'checked' : ''}`}>
+                      {tcAgreed && (
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M2 6L5 9L10 3" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <span>I have read and agree to all the Terms & Conditions</span>
+                  </label>
 
-                <button
-                  className={`cta-btn cta-primary tc-accept-btn ${!tcAgreed ? 'disabled' : ''}`}
-                  onClick={tcAgreed ? handleTcAccept : undefined}
-                  disabled={!tcAgreed}
-                >
-                  Accept & Continue
-                </button>
+                  <button
+                    className={`cta-btn cta-primary tc-accept-btn ${!tcAgreed ? 'disabled' : ''}`}
+                    onClick={tcAgreed ? handleTcAccept : undefined}
+                    disabled={!tcAgreed}
+                  >
+                    Accept & Continue
+                  </button>
+                </div>
               </div>
             </motion.div>
           </>
