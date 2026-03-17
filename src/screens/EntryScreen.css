@@ -1,0 +1,56 @@
+.entry-hero {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.hero-emoji {
+  font-size: 52px;
+  height: 120px;
+  background: linear-gradient(135deg, #e8f4fd, #d4edfc);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.entry-content {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.entry-subtitle {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+.benefits-list {
+  margin-bottom: 16px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+}
+.benefit-item:last-child { border-bottom: none; }
+
+.benefit-emoji {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.prefill-note {
+  text-align: center;
+  font-size: 11px;
+  color: #bbb;
+  margin-top: 12px;
+}

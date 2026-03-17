@@ -1,0 +1,159 @@
+.bank-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  max-height: 190px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.bank-list::-webkit-scrollbar { width: 3px; }
+.bank-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+
+.bank-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  width: 100%;
+  text-align: left;
+}
+.bank-option:hover { border-color: #ccc; background: #fafafa; }
+.bank-option.active {
+  border-color: #292075;
+  background: #f0eef8;
+}
+
+.bank-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.bank-logo-ph {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.bank-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+.bank-option.active .bank-name { color: #292075; }
+
+.bank-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.bank-option.active .bank-radio {
+  border-color: #292075;
+}
+.bank-radio-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #292075;
+}
+
+.amount-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.amount-card {
+  padding: 14px 10px;
+  border-radius: 12px;
+  border: 1.5px solid #e0e0e0;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.amount-card.active {
+  border-color: #292075;
+  background: #f0eef8;
+}
+.amount-card .amt {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 3px;
+}
+.amount-card.active .amt { color: #292075; }
+.amount-card .cl {
+  font-size: 10px;
+  color: #999;
+  font-weight: 500;
+}
+.amount-card.active .cl { color: #5b4cbf; }
+
+.pill-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.pill {
+  flex: 1;
+  padding: 10px 6px;
+  border-radius: 10px;
+  border: 1.5px solid #e0e0e0;
+  background: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.pill.active {
+  border-color: #292075;
+  background: #f0eef8;
+  color: #292075;
+}
+
+.summary-strip {
+  background: #292075;
+  border-radius: 14px;
+  padding: 16px;
+  color: #fff;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-row .sl { opacity: 0.65; font-weight: 500; }
+.summary-row .sv { font-weight: 700; }
+.summary-row.highlight .sv { color: #5ee8a0; font-size: 15px; }

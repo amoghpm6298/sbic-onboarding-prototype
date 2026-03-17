@@ -1,0 +1,119 @@
+.screen {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen--dark {
+  background: linear-gradient(180deg, #0a0825 0%, #120f3a 50%, #0a0825 100%);
+}
+
+.screen-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 20px;
+  padding-bottom: 90px;
+  -webkit-overflow-scrolling: touch;
+}
+.screen-scroll::-webkit-scrollbar { display: none; }
+
+.screen--dark .screen-scroll {
+  padding-bottom: 90px;
+}
+
+.bottom-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  padding: 12px 20px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+  z-index: 50;
+}
+
+.screen--dark .bottom-bar {
+  background: rgba(10, 8, 37, 0.95);
+  border-top-color: rgba(255,255,255,0.06);
+}
+
+.cta-btn {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cta-btn:active { transform: scale(0.98); }
+
+.cta-primary {
+  background: #292075;
+  color: #fff;
+}
+.cta-primary:hover { background: #1e1660; }
+
+.cta-back {
+  background: #f5f5f5;
+  color: #292075;
+  flex: 0 0 auto;
+  padding: 16px 20px;
+  font-size: 18px;
+}
+
+.cta-outline {
+  background: #fff;
+  color: #292075;
+  border: 1.5px solid #292075;
+}
+
+/* Shared form styles */
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #292075;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+  margin-top: 8px;
+}
+
+.info-card {
+  background: #f8f9fb;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+}
+.info-row:last-child { border-bottom: none; }
+.info-row .label { color: #999; font-weight: 500; }
+.info-row .val { color: #1a1a2e; font-weight: 600; }
+
+h1 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #292075;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.helper-text {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}

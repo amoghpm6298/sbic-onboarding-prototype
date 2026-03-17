@@ -1,0 +1,95 @@
+.congrats-title {
+  color: #1FA8E1 !important;
+  font-size: 26px !important;
+  font-weight: 800;
+  text-align: center;
+}
+
+.congrats-sub {
+  color: rgba(255,255,255,0.55);
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 6px;
+  margin-bottom: 24px;
+}
+
+.card-image-wrap {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.card-image {
+  width: 270px;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(31,168,225,0.25), 0 0 60px rgba(31,168,225,0.08);
+}
+
+.dark-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.dark-detail-item {
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.ddl {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+}
+
+.ddv {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ddv.green { color: #5ee8a0; }
+
+.privileges-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.benefit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.benefit-emoji {
+  font-size: 26px;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.bt-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 3px;
+}
+
+.bt-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.4;
+}
