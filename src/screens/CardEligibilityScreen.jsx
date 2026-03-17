@@ -86,6 +86,16 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
     }
   }
 
+  // Focus first OTP input when sheet opens (once only)
+  useEffect(() => {
+    if (sheet === 'otp') {
+      setTimeout(() => {
+        const el = otpRefs.current[0]
+        if (el) { el.focus({ preventScroll: true }); el.select() }
+      }, 300)
+    }
+  }, [sheet])
+
   const handleOtpFocus = (e) => {
     e.target.select()
   }
@@ -217,10 +227,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
                   {otp.map((digit, i) => (
                     <input
                       key={i}
-                      ref={el => {
-                        otpRefs.current[i] = el
-                        if (i === 0 && el) setTimeout(() => { el.focus({ preventScroll: true }); el.select() }, 200)
-                      }}
+                      ref={el => { otpRefs.current[i] = el }}
                       type="tel"
                       inputMode="numeric"
                       pattern="[0-9]*"
