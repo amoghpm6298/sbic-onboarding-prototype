@@ -20,72 +20,64 @@ export default function RejectionScreen({ direction, onNext }) {
           Dear Rahul,<br />thank you for your request
         </motion.h1>
 
-        {/* Illustration */}
-        <motion.div
-          className="rej-illustration"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.4, type: 'spring', stiffness: 150 }}
-        >
-          <div className="rej-stop-sign">
-            <svg width="72" height="72" viewBox="0 0 64 64" fill="none">
-              <path d="M22 4h20l14 14v20L42 52H22L8 38V18L22 4z" fill="#F97316" stroke="#EA580C" strokeWidth="2"/>
-              <path d="M26 24v-2a6 6 0 0112 0v2M24 24h16v12a4 4 0 01-4 4h-8a4 4 0 01-4-4V24z" fill="#FED7AA" stroke="#EA580C" strokeWidth="1.5"/>
-              <circle cx="32" cy="18" r="2" fill="#EA580C"/>
-            </svg>
-          </div>
-        </motion.div>
-
         <motion.p
           className="rej-message"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
         >
-          We regret to inform you that we are unable to process your card application currently due to internal policies.
+          We regret to inform you that we are unable to process your card application due to internal policies.
         </motion.p>
       </div>
 
-      {/* Don't worry section */}
+      {/* FD Credit Card offer — prominent card */}
       <motion.div
-        className="rej-hope"
+        className="rej-offer"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
       >
-        <p className="rej-hope-title">Don't worry, you can still get a Credit Card!</p>
+        <div className="rej-offer-badge">NEW OFFER</div>
+        <p className="rej-offer-title">Get an FD-Backed Credit Card</p>
+        <p className="rej-offer-desc">Book a Fixed Deposit. Get an SBI Card. Build your credit score.</p>
 
-        <div className="rej-benefits">
-          <div className="rej-benefit">
-            <span className="rej-check">✓</span>
-            <span>Book FD with <strong>any bank</strong> at highest interest rates</span>
+        <div className="rej-offer-card-preview">
+          <img src="/sbic-unnati-card.webp" alt="SBI Card Unnati" className="rej-card-img" />
+        </div>
+
+        <div className="rej-offer-highlights">
+          <div className="rej-highlight">
+            <div className="rej-hl-value">Any Bank</div>
+            <div className="rej-hl-label">FD Partner</div>
           </div>
-          <div className="rej-benefit">
-            <span className="rej-check">✓</span>
-            <span>Earn <strong>high returns</strong> on your FD while you spend</span>
+          <div className="rej-hl-divider" />
+          <div className="rej-highlight">
+            <div className="rej-hl-value">Up to 7.5%</div>
+            <div className="rej-hl-label">FD Interest p.a.</div>
           </div>
-          <div className="rej-benefit">
-            <span className="rej-check">✓</span>
-            <span><strong>Build your credit score</strong> for future upgrades</span>
+          <div className="rej-hl-divider" />
+          <div className="rej-highlight">
+            <div className="rej-hl-value">₹0 Fee</div>
+            <div className="rej-hl-label">For 4 Years</div>
           </div>
         </div>
-      </motion.div>
 
-      {/* CTAs */}
-      <div className="rej-ctas">
-        <motion.button
-          className="rej-cta-primary"
-          onClick={onNext}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-        >
-          Apply for Secured Credit Card
+        <div className="rej-offer-benefits">
+          <div className="rej-ob">✓ Earn interest on your FD while you spend on the card</div>
+          <div className="rej-ob">✓ Build your CIBIL score for future unsecured cards</div>
+          <div className="rej-ob">✓ FD insured up to ₹5 lakh by DICGC</div>
+        </div>
+
+        <button className="rej-offer-cta" onClick={onNext}>
+          Apply Now
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ marginLeft: 6 }}>
             <path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-        </motion.button>
+        </button>
+      </motion.div>
 
+      {/* Exit */}
+      <div className="rej-ctas">
         <motion.button
           className="rej-cta-exit"
           initial={{ opacity: 0 }}
@@ -93,9 +85,6 @@ export default function RejectionScreen({ direction, onNext }) {
           transition={{ delay: 1.2 }}
         >
           Exit
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ marginLeft: 4 }}>
-            <path d="M2 7h10M8 3l4 4-4 4" stroke="#1FA8E1" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
         </motion.button>
       </div>
     </motion.div>

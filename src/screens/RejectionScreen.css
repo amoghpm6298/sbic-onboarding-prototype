@@ -2,7 +2,7 @@
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: linear-gradient(180deg, #292075 0%, #1a1652 60%, #120f3a 100%);
+  background: linear-gradient(180deg, #292075 0%, #1a1652 40%, #120f3a 100%);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -10,96 +10,134 @@
 }
 .rejection-screen::-webkit-scrollbar { display: none; }
 
+/* Top rejection area — compact */
 .rej-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
-  padding: 60px 28px 16px;
+  padding: 48px 28px 12px;
+  flex-shrink: 0;
 }
 
 .rej-greeting {
-  font-size: 22px !important;
+  font-size: 20px !important;
   font-weight: 800;
   color: #fff !important;
   line-height: 1.3;
-  margin-bottom: 24px !important;
-}
-
-.rej-illustration {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 10px !important;
 }
 
 .rej-message {
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.6;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
   max-width: 280px;
   margin: 0;
 }
 
-/* Don't worry */
-.rej-hope {
-  margin: 16px 28px;
-  padding: 20px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px;
+/* ── FD Credit Card Offer — prominent ── */
+.rej-offer {
+  margin: 16px 20px;
+  padding: 24px 20px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  position: relative;
+  flex: 1;
 }
 
-.rej-hope-title {
-  font-size: 16px;
-  font-weight: 700;
+.rej-offer-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
   color: #fff;
-  margin: 0 0 14px;
+  background: #1FA8E1;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
 }
 
-.rej-benefits {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.rej-offer-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 6px;
+  line-height: 1.2;
 }
 
-.rej-benefit {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.rej-offer-desc {
   font-size: 13px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.5);
+  margin: 0 0 16px;
   line-height: 1.4;
 }
 
-.rej-benefit strong {
+/* Card preview */
+.rej-offer-card-preview {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.rej-card-img {
+  width: 180px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(31,168,225,0.2);
+}
+
+/* Highlights row */
+.rej-offer-highlights {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 14px 8px;
+  margin-bottom: 16px;
+}
+
+.rej-highlight {
+  flex: 1;
+  text-align: center;
+}
+
+.rej-hl-value {
+  font-size: 15px;
+  font-weight: 800;
   color: #fff;
 }
 
-.rej-check {
-  color: #1FA8E1;
-  font-weight: 700;
-  font-size: 14px;
-  flex-shrink: 0;
+.rej-hl-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+  margin-top: 2px;
 }
 
-/* CTAs */
-.rej-ctas {
-  padding: 16px 28px;
-  padding-bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
+.rej-hl-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.1);
+}
+
+/* Benefits */
+.rej-offer-benefits {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-.rej-cta-primary {
+.rej-ob {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+}
+
+/* CTA inside offer card */
+.rej-offer-cta {
   width: 100%;
-  padding: 16px;
+  padding: 15px;
   border: none;
   border-radius: 12px;
   background: #1FA8E1;
@@ -113,21 +151,26 @@
   justify-content: center;
   transition: background 0.15s;
 }
-.rej-cta-primary:hover { background: #0095D9; }
-.rej-cta-primary:active { transform: scale(0.98); }
+.rej-offer-cta:hover { background: #0095D9; }
+.rej-offer-cta:active { transform: scale(0.98); }
+
+/* Exit */
+.rej-ctas {
+  padding: 8px 28px;
+  padding-bottom: max(16px, calc(env(safe-area-inset-bottom) + 8px));
+  flex-shrink: 0;
+}
 
 .rej-cta-exit {
   width: 100%;
-  padding: 14px;
-  border: 1.5px solid rgba(255,255,255,0.15);
-  border-radius: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
   background: transparent;
-  color: #1FA8E1;
+  color: rgba(255,255,255,0.35);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
