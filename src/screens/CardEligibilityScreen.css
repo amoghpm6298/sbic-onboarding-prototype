@@ -172,25 +172,33 @@
 .sheet-body::-webkit-scrollbar { display: none; }
 
 /* ── T&C Sheet ── */
-.tc-body {
+.tc-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  z-index: 9001;
+  height: 80vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  padding-bottom: 0;
 }
 
-.tc-list {
+.tc-scroll {
   flex: 1;
   overflow-y: auto;
-  margin-bottom: 0;
-  padding-bottom: 12px;
+  padding: 0 24px 16px;
   -webkit-overflow-scrolling: touch;
 }
-.tc-list::-webkit-scrollbar { display: none; }
+.tc-scroll::-webkit-scrollbar { display: none; }
 
-.tc-footer {
+.tc-fixed-footer {
   flex-shrink: 0;
-  padding: 16px 0 0;
+  padding: 16px 24px;
+  padding-bottom: max(16px, calc(env(safe-area-inset-bottom) + 8px));
   border-top: 1px solid #f0f0f0;
   background: #fff;
 }

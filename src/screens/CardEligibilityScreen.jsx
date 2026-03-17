@@ -123,7 +123,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
         {sheet === 'tc' && (
           <>
             <motion.div className="sheet-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(null)} />
-            <motion.div className="sheet sheet-tall" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 28, stiffness: 300 }}>
+            <motion.div className="tc-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 28, stiffness: 300 }}>
               <div className="sheet-handle" />
               <div className="sheet-header">
                 <h2 className="sheet-title">Terms & Conditions</h2>
@@ -131,36 +131,32 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L15 15M15 5L5 15" stroke="#999" strokeWidth="1.8" strokeLinecap="round"/></svg>
                 </button>
               </div>
-              <div className="sheet-body tc-body">
-                <div className="tc-list">
-                  {TC_ITEMS.map((item, i) => (
-                    <div className="tc-item" key={i}>
-                      <div className="tc-num">{i + 1}.</div>
-                      <p className="tc-text">{item}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="tc-footer">
-                  <label className="tc-checkbox-row" onClick={() => setTcAgreed(!tcAgreed)}>
-                    <div className={`tc-checkbox ${tcAgreed ? 'checked' : ''}`}>
-                      {tcAgreed && (
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M2 6L5 9L10 3" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )}
-                    </div>
-                    <span>I have read and agree to all the Terms & Conditions</span>
-                  </label>
-
-                  <button
-                    className={`cta-btn cta-primary tc-accept-btn ${!tcAgreed ? 'disabled' : ''}`}
-                    onClick={tcAgreed ? handleTcAccept : undefined}
-                    disabled={!tcAgreed}
-                  >
-                    Accept & Continue
-                  </button>
-                </div>
+              <div className="tc-scroll">
+                {TC_ITEMS.map((item, i) => (
+                  <div className="tc-item" key={i}>
+                    <div className="tc-num">{i + 1}.</div>
+                    <p className="tc-text">{item}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="tc-fixed-footer">
+                <label className="tc-checkbox-row" onClick={() => setTcAgreed(!tcAgreed)}>
+                  <div className={`tc-checkbox ${tcAgreed ? 'checked' : ''}`}>
+                    {tcAgreed && (
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6L5 9L10 3" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </div>
+                  <span>I have read and agree to all the Terms & Conditions</span>
+                </label>
+                <button
+                  className={`cta-btn cta-primary tc-accept-btn ${!tcAgreed ? 'disabled' : ''}`}
+                  onClick={tcAgreed ? handleTcAccept : undefined}
+                  disabled={!tcAgreed}
+                >
+                  Accept & Continue
+                </button>
               </div>
             </motion.div>
           </>
