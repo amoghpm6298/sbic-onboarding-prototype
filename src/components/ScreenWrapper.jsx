@@ -14,12 +14,16 @@ export default function ScreenWrapper({ direction, dark, children, bottomBar }) 
   // Reset scroll to top when screen mounts
   useEffect(() => {
     const el = scrollRef.current
-    if (el) {
-      el.scrollTop = 0
-      // Double-force after animation frame in case layout shifts
-      requestAnimationFrame(() => { el.scrollTop = 0 })
-      setTimeout(() => { el.scrollTop = 0 }, 50)
-    }
+    if (!el) return
+    // Immediate
+    el.scrollTo(0, 0)
+    // After paint
+    requestAnimationFrame(() => {
+      el.scrollTo(0, 0)
+      // After framer-motion animation settles
+      setTimeout(() => el.scrollTo(0, 0), 100)
+      setTimeout(() => el.scrollTo(0, 0), 350)
+    })
   }, [])
 
   return (

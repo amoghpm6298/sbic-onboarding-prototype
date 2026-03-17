@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import ScreenWrapper, { CtaButton } from '../components/ScreenWrapper'
 import './ConfirmationScreen.css'
@@ -32,16 +33,19 @@ export default function ConfirmationScreen({ direction, fdConfig, rate, goTo }) 
       direction={direction}
       bottomBar={<CtaButton onClick={() => goTo(1)}>Back to Home</CtaButton>}
     >
-      {/* Confetti overlay */}
-      <div className="confetti-box">
-        {confettiBits.map((c) => (
-          <div
-            key={c.id}
-            className="confetti-bit"
-            style={{ left: c.left, background: c.bg, animationDelay: c.delay, width: c.w, height: c.w }}
-          />
-        ))}
-      </div>
+      {/* Confetti via portal — completely outside scroll */}
+      {createPortal(
+        <div className="confetti-box">
+          {confettiBits.map((c) => (
+            <div
+              key={c.id}
+              className="confetti-bit"
+              style={{ left: c.left, background: c.bg, animationDelay: c.delay, width: c.w, height: c.w }}
+            />
+          ))}
+        </div>,
+        document.body
+      )}
 
       <div style={{ textAlign: 'center' }}>
         <motion.div
