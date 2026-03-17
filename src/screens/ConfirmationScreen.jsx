@@ -37,7 +37,10 @@ export default function ConfirmationScreen({ direction, fdConfig, rate, goTo }) 
   ]
 
   return (
-    <ScreenWrapper direction={direction}>
+    <ScreenWrapper
+      direction={direction}
+      bottomBar={<CtaButton onClick={() => goTo(1)}>Back to Home</CtaButton>}
+    >
       <div className="confirm-wrap">
         <div className="confetti-box" ref={confettiRef} />
 
@@ -80,10 +83,6 @@ export default function ConfirmationScreen({ direction, fdConfig, rate, goTo }) 
 
         <div className="vcard-teaser">
           💳 Your virtual card will be available instantly upon approval
-        </div>
-
-        <div className="dual-cta">
-          <CtaButton variant="primary" className="small-cta" onClick={() => goTo(1)}>Back to Home</CtaButton>
         </div>
       </div>
     </ScreenWrapper>
