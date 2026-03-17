@@ -151,8 +151,8 @@
 .sheet-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 200;
+  background: rgba(0,0,0,0.45);
+  z-index: 9000;
 }
 
 .sheet {
@@ -164,10 +164,11 @@
   margin: 0 auto;
   background: #fff;
   border-radius: 20px 20px 0 0;
-  z-index: 201;
+  z-index: 9001;
   max-height: 70vh;
   display: flex;
   flex-direction: column;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
 }
 
 .sheet-handle {

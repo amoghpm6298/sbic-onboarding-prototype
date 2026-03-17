@@ -54,142 +54,182 @@
   align-items: flex-start;
 }
 
-/* Video phase - concentric circles */
-.vkyc-processing {
+/* Video call screen */
+.video-call-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+  margin: -24px -24px 0;
+}
+
+.vc-agent-area {
+  position: relative;
+  background: linear-gradient(180deg, #1a1a2e 0%, #2a2a4e 100%);
+  flex: 1;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+}
+
+.vc-agent-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 460px;
-  text-align: center;
-  background: #fff;
+  gap: 12px;
 }
 
-.vkyc-concentric-wrap {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 28px;
+.vc-agent-name-tag {
+  background: rgba(255,255,255,0.12);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
 }
 
-.vkyc-circle {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid #e0e0e0;
-}
-
-.vc1 { width: 180px; height: 180px; }
-.vc2 { width: 140px; height: 140px; }
-.vc3 { width: 100px; height: 100px; }
-.vc4 { width: 64px; height: 64px; }
-
-.vkyc-center-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #1FA8E1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-}
-
-.vkyc-center-check {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #16a34a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-}
-
-.vkyc-status-text {
-  margin-bottom: 28px;
-}
-
-.vkyc-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1FA8E1;
+.vc-connecting-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
   margin: 0;
 }
 
-.vkyc-title-success {
-  color: #16a34a;
-}
-
-.vkyc-agent {
-  font-size: 13px;
-  color: #999;
-  margin-top: 6px;
-}
-
-/* Verification steps */
-.vkyc-steps {
-  width: 100%;
-  max-width: 240px;
-}
-
-.vkyc-step {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  font-size: 13px;
-  font-weight: 500;
-  color: #999;
-  transition: color 0.3s;
-}
-
-.vkyc-step.active { color: #1a1a2e; }
-.vkyc-step.done { color: #16a34a; }
-
-.vkyc-step-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+/* Self view */
+.vc-self-view {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 64px;
+  height: 80px;
+  background: #292075;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  background: #f5f5f5;
-  flex-shrink: 0;
-  transition: all 0.3s;
+  border: 2px solid rgba(255,255,255,0.2);
 }
 
-.vkyc-step.active .vkyc-step-icon {
-  background: #f8f9fa;
-  border: 1px solid #e0e0e0;
+/* Recording indicator */
+.vc-recording {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #ef4444;
+  letter-spacing: 0.5px;
 }
 
-.vkyc-step.done .vkyc-step-icon {
-  background: #f0fdf4;
+.vc-rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
 }
 
-.vkyc-step-num {
-  font-size: 11px;
+/* Call controls */
+.vc-controls {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px 0;
+  background: #1a1a2e;
+  border-radius: 0 0 20px 20px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 1;
+}
+
+.vc-control-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
   font-weight: 600;
-  color: #ccc;
+  color: rgba(255,255,255,0.6);
 }
 
-.vkyc-step-spinner {
-  width: 14px;
-  height: 14px;
+.vc-end {
+  color: #ef4444;
+}
+
+/* Status bar */
+.vc-status-bar {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vc-status-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+.vc-status-done {
+  color: #16a34a;
+}
+
+.vc-status-spinner {
+  width: 16px;
+  height: 16px;
   border: 2px solid #e0e0e0;
   border-top-color: #1FA8E1;
   border-radius: 50%;
-  animation: vkyc-spin 0.8s linear infinite;
+  animation: vc-spin 0.8s linear infinite;
 }
 
-@keyframes vkyc-spin {
+@keyframes vc-spin {
   to { transform: rotate(360deg); }
+}
+
+/* Step pills */
+.vc-step-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vc-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ccc;
+  transition: all 0.3s;
+}
+
+.vc-pill.active {
+  color: #1a1a2e;
+  border-color: #1FA8E1;
+  background: #f0f9ff;
+}
+
+.vc-pill.done {
+  color: #16a34a;
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.vc-pill span {
+  flex: 1;
 }
 
 /* Success */

@@ -106,139 +106,131 @@ export default function KYCScreen({ direction, onNext, onBack }) {
     )
   }
 
-  // Video phase - concentric circles like payment processing
+  // Video phase - realistic video call UI
   if (phase === 'video') {
     return (
       <ScreenWrapper direction={direction}>
-        <div className="vkyc-processing">
-          {/* Concentric circles */}
-          <div className="vkyc-concentric-wrap">
-            <motion.div
-              className="vkyc-circle vc1"
-              animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.05, 0.15] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.div
-              className="vkyc-circle vc2"
-              animate={{ scale: [1, 1.08, 1], opacity: [0.2, 0.08, 0.2] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
-            />
-            <motion.div
-              className="vkyc-circle vc3"
-              animate={{ scale: [1, 1.06, 1], opacity: [0.25, 0.12, 0.25] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-            />
-            <motion.div
-              className="vkyc-circle vc4"
-              animate={{ scale: [1, 1.04, 1], opacity: [0.3, 0.15, 0.3] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-            />
-
-            {/* Center person icon / checkmark */}
-            <AnimatePresence mode="wait">
-              {!processingDone ? (
-                <motion.div
-                  key="person"
-                  className="vkyc-center-icon"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
+        <div className="video-call-screen">
+          {/* Agent video area */}
+          <div className="vc-agent-area">
+            <div className="vc-agent-placeholder">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="18" r="8" stroke="rgba(255,255,255,0.4)" strokeWidth="2.5"/>
+                <path d="M8 42c0-8 7-14 16-14s16 6 16 14" stroke="rgba(255,255,255,0.4)" strokeWidth="2.5" strokeLinecap="round"/>
+              </svg>
+              <AnimatePresence>
+                {connected && (
+                  <motion.div
+                    className="vc-agent-name-tag"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    KYC Agent: Priya M.
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              {!connected && (
+                <motion.p
+                  className="vc-connecting-text"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="8" r="4" stroke="#fff" strokeWidth="2"/>
-                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
+                  Connecting...
+                </motion.p>
+              )}
+            </div>
+
+            {/* Self-view small */}
+            <div className="vc-self-view">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="9" r="4" stroke="#fff" strokeWidth="1.5"/>
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </div>
+
+            {/* Recording indicator */}
+            {connected && (
+              <motion.div
+                className="vc-recording"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <motion.div
+                  className="vc-rec-dot"
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                />
+                <span>REC</span>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Call controls */}
+          <div className="vc-controls">
+            <div className="vc-control-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 3v6M7 6l3-3 3 3" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <rect x="6" y="9" width="8" height="6" rx="1" stroke="#fff" strokeWidth="1.5"/>
+              </svg>
+              <span>Camera</span>
+            </div>
+            <div className="vc-control-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="7" y="2" width="6" height="10" rx="3" stroke="#fff" strokeWidth="1.5"/>
+                <path d="M4 9a6 6 0 0012 0M10 15v3" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              <span>Mic</span>
+            </div>
+            <div className="vc-control-btn vc-end">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M2 8c0-1 1.5-3 8-3s8 2 8 3v2c0 .5-.5 1-1.5 1h-2c-.5 0-1-.5-1-1V9c-1-.3-2.3-.5-3.5-.5S7.5 8.7 6.5 9v1c0 .5-.5 1-1 1h-2C2.5 11 2 10.5 2 10V8z" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>End</span>
+            </div>
+          </div>
+
+          {/* Status bar with verification steps */}
+          <div className="vc-status-bar">
+            <AnimatePresence mode="wait">
+              {!connected ? (
+                <motion.div key="c" className="vc-status-msg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <div className="vc-status-spinner" />
+                  <span>Connecting to KYC agent...</span>
+                </motion.div>
+              ) : processingDone ? (
+                <motion.div key="d" className="vc-status-msg vc-status-done" initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <circle cx="9" cy="9" r="8" fill="#16a34a"/>
+                    <path d="M5.5 9L8 11.5L12.5 6.5" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
+                  <span>KYC Completed!</span>
                 </motion.div>
               ) : (
-                <motion.div
-                  key="check"
-                  className="vkyc-center-check"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                >
-                  <svg viewBox="0 0 24 24" width="24" height="24">
-                    <motion.path
-                      d="M5 12L10 17L19 7"
-                      stroke="#fff"
-                      strokeWidth="2.5"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.4, delay: 0.2 }}
-                    />
-                  </svg>
+                <motion.div key="v" className="vc-status-msg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <span>Verifying your identity...</span>
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
 
-          {/* Status text */}
-          <AnimatePresence mode="wait">
-            {!connected ? (
-              <motion.div
-                key="connecting"
-                className="vkyc-status-text"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <h2 className="vkyc-title">Connecting to KYC Agent...</h2>
-              </motion.div>
-            ) : !processingDone ? (
-              <motion.div
-                key="verifying"
-                className="vkyc-status-text"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <h2 className="vkyc-title">Verifying your identity</h2>
-                <p className="vkyc-agent">KYC Agent: Priya M.</p>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="done"
-                className="vkyc-status-text"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <h2 className="vkyc-title vkyc-title-success">KYC Completed!</h2>
-              </motion.div>
+            {connected && (
+              <div className="vc-step-pills">
+                {vSteps.map((s) => {
+                  const isDone = doneSteps.includes(s.id)
+                  const isActive = activeStep === s.id
+                  return (
+                    <motion.div
+                      key={s.id}
+                      className={`vc-pill ${isDone ? 'done' : ''} ${isActive ? 'active' : ''}`}
+                      animate={{ opacity: isActive || isDone ? 1 : 0.4 }}
+                    >
+                      {isDone ? '✓' : isActive ? '...' : s.id}
+                      <span>{isDone ? s.done : s.pending.replace('...', '')}</span>
+                    </motion.div>
+                  )
+                })}
+              </div>
             )}
-          </AnimatePresence>
-
-          {/* Verification steps */}
-          {connected && (
-            <div className="vkyc-steps">
-              {vSteps.map((s) => {
-                const isDone = doneSteps.includes(s.id)
-                const isActive = activeStep === s.id
-                return (
-                  <motion.div
-                    key={s.id}
-                    className={`vkyc-step ${isDone ? 'done' : ''} ${isActive ? 'active' : ''}`}
-                    animate={{ opacity: isActive || isDone ? 1 : 0.35 }}
-                  >
-                    <div className="vkyc-step-icon">
-                      {isDone ? (
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M2 6L5 9L10 3" stroke="#16a34a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      ) : isActive ? (
-                        <div className="vkyc-step-spinner" />
-                      ) : (
-                        <span className="vkyc-step-num">{s.id}</span>
-                      )}
-                    </div>
-                    <span>{isDone ? s.done : s.pending}</span>
-                  </motion.div>
-                )
-              })}
-            </div>
-          )}
+          </div>
         </div>
       </ScreenWrapper>
     )
