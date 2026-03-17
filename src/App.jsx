@@ -55,7 +55,6 @@ export default function App() {
 
   return (
     <div className="app-wrapper">
-      <div className="watermark">Prototype — For Demo Purposes Only</div>
       <PhoneFrame stepper={<Stepper steps={STEPS} current={step} />}>
         <AnimatePresence mode="wait" custom={direction}>
           {screens[step]}

@@ -28,7 +28,7 @@
   bottom: 0; left: 0; right: 0;
   background: #fff;
   padding: 12px 20px;
-  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  padding-bottom: max(16px, calc(env(safe-area-inset-bottom) + 8px));
   border-top: 1px solid #eee;
   display: flex;
   gap: 10px;
