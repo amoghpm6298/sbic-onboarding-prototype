@@ -41,8 +41,28 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
     setOtpError(false)
   }
 
+  const focusInput = (index) => {
+    const el = otpRefs.current[index]
+    if (!el) return
+    setTimeout(() => {
+      el.focus({ preventScroll: true })
+      el.select()
+    }, 10)
+  }
+
   const handleOtpChange = (index, value) => {
-    if (value.length > 1) value = value.slice(-1)
+    // Handle paste of full OTP
+    if (value.length > 1) {
+      const digits = value.replace(/\D/g, '').slice(0, 6).split('')
+      const newOtp = [...otp]
+      digits.forEach((d, i) => { if (index + i < 6) newOtp[index + i] = d })
+      setOtp(newOtp)
+      setOtpError(false)
+      const nextIndex = Math.min(index + digits.length, 5)
+      focusInput(nextIndex)
+      return
+    }
+
     if (value && !/^\d$/.test(value)) return
 
     const newOtp = [...otp]
@@ -50,16 +70,24 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
     setOtp(newOtp)
     setOtpError(false)
 
-    // Auto-focus next
     if (value && index < 5) {
-      otpRefs.current[index + 1]?.focus()
+      focusInput(index + 1)
     }
   }
 
   const handleOtpKeyDown = (index, e) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      otpRefs.current[index - 1]?.focus()
+    if (e.key === 'Backspace') {
+      if (!otp[index] && index > 0) {
+        const newOtp = [...otp]
+        newOtp[index - 1] = ''
+        setOtp(newOtp)
+        focusInput(index - 1)
+      }
     }
+  }
+
+  const handleOtpFocus = (e) => {
+    e.target.select()
   }
 
   const handleOtpVerify = () => {
@@ -191,15 +219,17 @@ export default function CardEligibilityScreen({ direction, creditLimit, onNext }
                       key={i}
                       ref={el => {
                         otpRefs.current[i] = el
-                        if (i === 0 && el) setTimeout(() => el.focus({ preventScroll: true }), 150)
+                        if (i === 0 && el) setTimeout(() => { el.focus({ preventScroll: true }); el.select() }, 200)
                       }}
                       type="tel"
                       inputMode="numeric"
+                      pattern="[0-9]*"
                       maxLength={1}
                       className={`otp-box ${digit ? 'filled' : ''} ${otpError ? 'error' : ''}`}
                       value={digit}
                       onChange={e => handleOtpChange(i, e.target.value)}
                       onKeyDown={e => handleOtpKeyDown(i, e)}
+                      onFocus={handleOtpFocus}
                     />
                   ))}
                 </div>
