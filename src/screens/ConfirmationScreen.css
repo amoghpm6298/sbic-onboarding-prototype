@@ -1,5 +1,32 @@
-.confirm-wrap {
-  text-align: center;
+/* Self-contained confirmation screen — no ScreenWrapper */
+.confirm-screen-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.confirm-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px 24px 80px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+.confirm-content::-webkit-scrollbar { display: none; }
+
+.confirm-bottom-bar {
+  flex-shrink: 0;
+  padding: 12px 24px;
+  padding-bottom: max(14px, calc(env(safe-area-inset-bottom) + 8px));
+  border-top: 1px solid #f0f0f0;
+  background: #fff;
 }
 
 .confetti-box {
@@ -34,8 +61,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  z-index: 1;
 }
 
 .confirm-title {
@@ -43,16 +68,12 @@
   font-weight: 800;
   color: #1a1a2e;
   text-align: center;
-  position: relative;
-  z-index: 1;
 }
 
 .confirm-sub {
   font-size: 13px;
   color: #999;
   margin-bottom: 8px;
-  position: relative;
-  z-index: 1;
 }
 
 .app-tag {
@@ -64,8 +85,6 @@
   font-weight: 600;
   color: #666;
   margin-bottom: 24px;
-  position: relative;
-  z-index: 1;
 }
 
 .timeline {
@@ -128,6 +147,4 @@
   gap: 10px;
   margin-top: 16px;
   text-align: left;
-  position: relative;
-  z-index: 1;
 }
