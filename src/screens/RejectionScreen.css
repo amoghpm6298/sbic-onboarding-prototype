@@ -38,13 +38,12 @@
 
 /* ── FD Credit Card Offer — prominent ── */
 .rej-offer {
-  margin: 16px 20px;
-  padding: 24px 20px;
+  margin: 12px 20px;
+  padding: 20px 18px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 20px;
   position: relative;
-  flex: 1;
 }
 
 .rej-offer-badge {
@@ -60,30 +59,30 @@
 }
 
 .rej-offer-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
   color: #fff;
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   line-height: 1.2;
 }
 
 .rej-offer-desc {
-  font-size: 13px;
+  font-size: 12px;
   color: rgba(255,255,255,0.5);
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   line-height: 1.4;
 }
 
 /* Card preview */
 .rej-offer-card-preview {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .rej-card-img {
-  width: 180px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(31,168,225,0.2);
+  width: 150px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(31,168,225,0.2);
 }
 
 /* Highlights row */
@@ -91,9 +90,9 @@
   display: flex;
   align-items: center;
   background: rgba(255,255,255,0.06);
-  border-radius: 14px;
-  padding: 14px 8px;
-  margin-bottom: 16px;
+  border-radius: 12px;
+  padding: 12px 6px;
+  margin-bottom: 12px;
 }
 
 .rej-highlight {
@@ -102,7 +101,7 @@
 }
 
 .rej-hl-value {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   color: #fff;
 }
@@ -124,8 +123,8 @@
 .rej-offer-benefits {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 6px;
+  margin-bottom: 16px;
 }
 
 .rej-ob {
@@ -137,7 +136,7 @@
 /* CTA inside offer card */
 .rej-offer-cta {
   width: 100%;
-  padding: 15px;
+  padding: 14px;
   border: none;
   border-radius: 12px;
   background: #1FA8E1;
