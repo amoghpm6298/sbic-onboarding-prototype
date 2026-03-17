@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import PhoneFrame from './components/PhoneFrame'
 import Stepper from './components/Stepper'
+import RejectionScreen from './screens/RejectionScreen'
 import EntryScreen from './screens/EntryScreen'
 import BookFDScreen from './screens/BookFDScreen'
 import KYCScreen from './screens/KYCScreen'
@@ -24,7 +25,8 @@ const RATES = {
 }
 
 export default function App() {
-  const [step, setStep] = useState(1)
+  // Step 0 = rejection, 1 = landing, 2-7 = flow
+  const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(1)
   const [fdConfig, setFdConfig] = useState({
     bank: 'SBI',
@@ -33,7 +35,7 @@ export default function App() {
   })
 
   const goTo = useCallback((s) => {
-    if (s < 1 || s > 6) return
+    if (s < 0 || s > 7) return
     setDirection(s > step ? 1 : -1)
     setStep(s)
   }, [step])
@@ -45,11 +47,12 @@ export default function App() {
   const creditLimit = Math.round(fdConfig.amount * 0.8)
   const maturity = Math.round(fdConfig.amount * Math.pow(1 + rate / 100, fdConfig.tenure))
 
-  // Stepper: step 1 = no stepper (landing), steps 2-6 map to STEPS[0-4]
-  const stepperCurrent = step - 1 // 0 for landing (hidden), 1-5 for rest
+  // Stepper: step 0,1 = no stepper, steps 2-7 map to STEPS[0-4]
+  const stepperCurrent = step - 1
   const showStepper = step > 1
 
   const screens = {
+    0: <RejectionScreen key="rejection" direction={direction} onNext={next} />,
     1: <EntryScreen key="entry" direction={direction} onNext={next} />,
     2: <BookFDScreen key="fd" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
          rate={rate} creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
@@ -57,12 +60,18 @@ export default function App() {
     4: <PaymentScreen key="pay" direction={direction} fdConfig={fdConfig} rate={rate}
          creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
     5: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit} onNext={next} />,
-    6: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={goTo} />,
+    6: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={() => goTo(0)} />,
   }
+
+  // Hide header + stepper on rejection screen
+  const showHeader = step > 0
 
   return (
     <div className="app-wrapper">
-      <PhoneFrame stepper={showStepper ? <Stepper steps={STEPS} current={stepperCurrent} /> : null}>
+      <PhoneFrame
+        stepper={showStepper ? <Stepper steps={STEPS} current={stepperCurrent} /> : null}
+        showHeader={showHeader}
+      >
         <AnimatePresence mode="wait" custom={direction}>
           {screens[step]}
         </AnimatePresence>
