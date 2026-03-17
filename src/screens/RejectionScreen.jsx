@@ -10,24 +10,6 @@ export default function RejectionScreen({ direction, onNext }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Confetti dots */}
-      <div className="rej-dots">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="rej-dot"
-            style={{
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 60 + '%',
-              width: (2 + Math.random() * 4) + 'px',
-              height: (2 + Math.random() * 4) + 'px',
-              opacity: 0.3 + Math.random() * 0.5,
-              animationDelay: Math.random() * 3 + 's',
-            }}
-          />
-        ))}
-      </div>
-
       <div className="rej-content">
         <motion.h1
           className="rej-greeting"
@@ -38,38 +20,27 @@ export default function RejectionScreen({ direction, onNext }) {
           Dear Rahul,<br />thank you for your request
         </motion.h1>
 
-        <motion.p
-          className="rej-subtitle"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          currently we are unable to process your request
-        </motion.p>
-
         {/* Illustration */}
         <motion.div
           className="rej-illustration"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.5, type: 'spring', stiffness: 150 }}
+          transition={{ delay: 0.4, type: 'spring', stiffness: 150 }}
         >
           <div className="rej-stop-sign">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <svg width="72" height="72" viewBox="0 0 64 64" fill="none">
               <path d="M22 4h20l14 14v20L42 52H22L8 38V18L22 4z" fill="#F97316" stroke="#EA580C" strokeWidth="2"/>
               <path d="M26 24v-2a6 6 0 0112 0v2M24 24h16v12a4 4 0 01-4 4h-8a4 4 0 01-4-4V24z" fill="#FED7AA" stroke="#EA580C" strokeWidth="1.5"/>
               <circle cx="32" cy="18" r="2" fill="#EA580C"/>
             </svg>
           </div>
-          <div className="rej-excl rej-excl-1">!</div>
-          <div className="rej-excl rej-excl-2">!</div>
         </motion.div>
 
         <motion.p
           className="rej-message"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
+          transition={{ delay: 0.6 }}
         >
           We regret to inform you that we are unable to process your card application currently due to internal policies.
         </motion.p>
@@ -80,31 +51,22 @@ export default function RejectionScreen({ direction, onNext }) {
         className="rej-hope"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
+        transition={{ delay: 0.8 }}
       >
         <p className="rej-hope-title">Don't worry, you can still get a Credit Card!</p>
-        <p className="rej-hope-desc">Apply for an FD-backed Secured Credit Card. Book a Fixed Deposit with any bank and get an SBI Card instantly.</p>
 
         <div className="rej-benefits">
           <div className="rej-benefit">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#1FA8E1" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#1FA8E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            <span>Book FD with <strong>any bank</strong> of your choice</span>
+            <span className="rej-check">✓</span>
+            <span>Book FD with <strong>any bank</strong> at highest interest rates</span>
           </div>
           <div className="rej-benefit">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#16a34a" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            <span>Earn <strong>highest interest rates</strong> up to 7.5% p.a.</span>
+            <span className="rej-check">✓</span>
+            <span>Earn <strong>high returns</strong> on your FD while you spend</span>
           </div>
           <div className="rej-benefit">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#1FA8E1" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#1FA8E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            <span><strong>Zero annual fee</strong> for first 4 years</span>
-          </div>
-          <div className="rej-benefit">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#16a34a" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <span className="rej-check">✓</span>
             <span><strong>Build your credit score</strong> for future upgrades</span>
-          </div>
-          <div className="rej-benefit">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#1FA8E1" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#1FA8E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            <span>FD insured up to <strong>₹5 lakh by DICGC</strong></span>
           </div>
         </div>
       </motion.div>
@@ -116,7 +78,7 @@ export default function RejectionScreen({ direction, onNext }) {
           onClick={onNext}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 1 }}
         >
           Apply for Secured Credit Card
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ marginLeft: 6 }}>
@@ -128,7 +90,7 @@ export default function RejectionScreen({ direction, onNext }) {
           className="rej-cta-exit"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
+          transition={{ delay: 1.2 }}
         >
           Exit
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ marginLeft: 4 }}>

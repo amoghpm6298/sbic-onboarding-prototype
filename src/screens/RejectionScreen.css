@@ -10,28 +10,6 @@
 }
 .rejection-screen::-webkit-scrollbar { display: none; }
 
-/* Floating dots */
-.rej-dots {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 60%;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.rej-dot {
-  position: absolute;
-  background: #fff;
-  border-radius: 50%;
-  animation: rej-twinkle 3s ease-in-out infinite;
-}
-
-@keyframes rej-twinkle {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.6; }
-}
-
-/* Content */
 .rej-content {
   flex: 1;
   display: flex;
@@ -39,7 +17,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 60px 28px 20px;
+  padding: 60px 28px 16px;
 }
 
 .rej-greeting {
@@ -47,73 +25,31 @@
   font-weight: 800;
   color: #fff !important;
   line-height: 1.3;
-  margin-bottom: 8px !important;
+  margin-bottom: 24px !important;
 }
 
-.rej-subtitle {
-  font-size: 14px;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 28px;
-}
-
-/* Illustration */
 .rej-illustration {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto 24px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.rej-stop-sign {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.rej-excl {
-  position: absolute;
-  font-size: 20px;
-  font-weight: 800;
-  color: #F97316;
-  animation: rej-bounce 2s ease-in-out infinite;
-}
-
-.rej-excl-1 {
-  top: 8px;
-  right: 12px;
-}
-
-.rej-excl-2 {
-  bottom: 12px;
-  left: 16px;
-  animation-delay: 0.5s;
-}
-
-@keyframes rej-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
 .rej-message {
   font-size: 13px;
   color: rgba(255,255,255,0.5);
   line-height: 1.6;
-  max-width: 300px;
+  max-width: 280px;
   margin: 0;
 }
 
-/* Don't worry section */
+/* Don't worry */
 .rej-hope {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin: 20px 28px;
-  padding: 18px;
+  margin: 16px 28px;
+  padding: 20px;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 16px;
@@ -123,14 +59,7 @@
   font-size: 16px;
   font-weight: 700;
   color: #fff;
-  margin: 0 0 6px;
-}
-
-.rej-hope-desc {
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.5;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
 }
 
 .rej-benefits {
@@ -150,6 +79,13 @@
 
 .rej-benefit strong {
   color: #fff;
+}
+
+.rej-check {
+  color: #1FA8E1;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
 }
 
 /* CTAs */
@@ -194,6 +130,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s;
 }
-.rej-cta-exit:hover { border-color: rgba(255,255,255,0.25); }
