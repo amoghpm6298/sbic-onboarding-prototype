@@ -10,7 +10,7 @@ import CardEligibilityScreen from './screens/CardEligibilityScreen'
 import ConfirmationScreen from './screens/ConfirmationScreen'
 import './App.css'
 
-const STEPS = ['Start', 'FD Details', 'Video KYC', 'Pay & Book', 'Card', 'Done']
+const STEPS = ['Start', 'FD Details', 'KYC', 'Pay & Book', 'Card', 'Done']
 
 const RATES = {
   SBI: { 1: 6.80, 2: 7.10, 3: 7.25, 5: 6.50 },

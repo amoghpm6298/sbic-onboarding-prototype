@@ -117,7 +117,7 @@ export default function EntryScreen({ direction, onNext }) {
       <div className="steps-visual">
         {[
           { num: '1', title: 'Choose your FD', desc: 'Pick a bank, amount & tenure' },
-          { num: '2', title: 'Quick Video KYC', desc: 'Verify identity in 3 minutes' },
+          { num: '2', title: 'Complete KYC', desc: 'Verify your identity quickly' },
           { num: '3', title: 'Pay & Book FD', desc: 'UPI, Net Banking or Debit Card' },
           { num: '4', title: 'Get your Card', desc: 'SBI Card Unnati, instantly' },
         ].map((step, i) => (

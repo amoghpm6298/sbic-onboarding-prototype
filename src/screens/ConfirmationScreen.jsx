@@ -30,7 +30,7 @@ export default function ConfirmationScreen({ direction, fdConfig, rate, goTo }) 
 
   const timeline = [
     { status: 'done', icon: '✓', title: 'FD Booked', detail: `${fmtINR(fdConfig.amount)} with ${fdConfig.bank} @ ${rate.toFixed(2)}%` },
-    { status: 'done', icon: '✓', title: 'Video KYC Completed', detail: 'Identity verified via video call' },
+    { status: 'done', icon: '✓', title: 'KYC Completed', detail: 'Identity verified successfully' },
     { status: 'done', icon: '✓', title: 'Application Submitted', detail: '17 Mar 2026, 9:41 AM' },
     { status: 'pend', icon: '⏲', title: 'Card Approval', detail: 'Within 24 hours' },
     { status: 'future', icon: '📦', title: 'Card Delivery', detail: '5–7 business days' },

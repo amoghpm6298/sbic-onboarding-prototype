@@ -72,12 +72,12 @@ export default function KYCScreen({ direction, onNext, onBack }) {
         bottomBar={
           <>
             <BackButton onClick={onBack} />
-            <CtaButton onClick={startVkyc}>Start Video KYC</CtaButton>
+            <CtaButton onClick={startVkyc}>Start KYC</CtaButton>
           </>
         }
       >
         <h1>Verify Your Identity</h1>
-        <p className="helper-text">Complete a quick Video KYC. This is a mandatory step.</p>
+        <p className="helper-text">Complete a quick KYC verification. This is a mandatory step.</p>
 
         <div className="kyc-req-card">
           <div className="kyc-req-title">What You'll Need</div>
@@ -205,7 +205,7 @@ export default function KYCScreen({ direction, onNext, onBack }) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="vkyc-title vkyc-title-success">Video KYC Completed!</h2>
+                <h2 className="vkyc-title vkyc-title-success">KYC Completed!</h2>
               </motion.div>
             )}
           </AnimatePresence>
@@ -272,7 +272,7 @@ export default function KYCScreen({ direction, onNext, onBack }) {
           </svg>
         </motion.div>
 
-        <h1 style={{ textAlign: 'center', fontSize: 20 }}>Video KYC Completed!</h1>
+        <h1 style={{ textAlign: 'center', fontSize: 20 }}>KYC Completed!</h1>
         <p style={{ textAlign: 'center', fontSize: 14, color: '#999', marginBottom: 24 }}>
           Your identity has been verified successfully
         </p>

@@ -15,7 +15,7 @@
   justify-content: space-between;
   padding: 14px 20px;
   background: #fff;
-  border-bottom: 2px solid #292075;
+  border-bottom: 1px solid #eee;
   flex-shrink: 0;
   padding-top: max(14px, env(safe-area-inset-top));
 }
