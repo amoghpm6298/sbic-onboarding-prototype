@@ -27,6 +27,9 @@ function BankLogo({ bank, size = 40 }) {
 
 export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, creditLimit, maturity, onNext, onBack }) {
   const [showBankSheet, setShowBankSheet] = useState(false)
+  const [showNomineeSheet, setShowNomineeSheet] = useState(false)
+  const [nominee, setNominee] = useState({ name: 'Priya Sharma', relation: 'Spouse', dob: '1994-08-22' })
+  const [nomineeDraft, setNomineeDraft] = useState(null)
   const update = (key, val) => setFdConfig(prev => ({ ...prev, [key]: val }))
 
   const handleBankSelect = (bankId) => {
@@ -138,13 +141,25 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
         </button>
       </div>
 
-      {/* Nominee note */}
-      <div className="nominee-note">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-          <circle cx="8" cy="6" r="3" stroke="#1FA8E1" strokeWidth="1.2"/>
-          <path d="M3 14c0-3 2.2-5 5-5s5 2 5 5" stroke="#1FA8E1" strokeWidth="1.2" strokeLinecap="round"/>
-        </svg>
-        <span>Nominee details will be carried from your existing profile</span>
+      {/* Nominee card */}
+      <div className="section-title">Nominee</div>
+      <div className="nominee-card" onClick={() => { setNomineeDraft({ ...nominee }); setShowNomineeSheet(true); }}>
+        <div className="nominee-info">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0 }}>
+            <circle cx="9" cy="7" r="3.5" stroke="#1FA8E1" strokeWidth="1.3"/>
+            <path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#1FA8E1" strokeWidth="1.3" strokeLinecap="round"/>
+          </svg>
+          <div className="nominee-details">
+            <div className="nominee-name">{nominee.name}</div>
+            <div className="nominee-relation">{nominee.relation}</div>
+          </div>
+        </div>
+        <div className="nominee-edit">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M10 2l2 2-7 7H3v-2l7-7z" stroke="#1FA8E1" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>Edit</span>
+        </div>
       </div>
 
       {/* Info note */}
@@ -211,6 +226,81 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
                     )}
                   </button>
                 ))}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* ── Nominee Bottom Sheet ── */}
+      <AnimatePresence>
+        {showNomineeSheet && nomineeDraft && (
+          <>
+            <motion.div
+              className="sheet-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowNomineeSheet(false)}
+            />
+            <motion.div
+              className="sheet"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+            >
+              <div className="sheet-handle" />
+              <div className="sheet-header">
+                <h2 className="sheet-title">Nominee Details</h2>
+                <button className="sheet-close" onClick={() => setShowNomineeSheet(false)}>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5 5L15 15M15 5L5 15" stroke="#999" strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                </button>
+              </div>
+              <div className="sheet-body nominee-sheet-body">
+                <div className="nom-field">
+                  <label className="nom-label">Nominee Name</label>
+                  <input
+                    className="nom-input"
+                    type="text"
+                    value={nomineeDraft.name}
+                    onChange={e => setNomineeDraft({ ...nomineeDraft, name: e.target.value })}
+                  />
+                </div>
+                <div className="nom-field">
+                  <label className="nom-label">Relationship</label>
+                  <select
+                    className="nom-input nom-select"
+                    value={nomineeDraft.relation}
+                    onChange={e => setNomineeDraft({ ...nomineeDraft, relation: e.target.value })}
+                  >
+                    <option>Spouse</option>
+                    <option>Father</option>
+                    <option>Mother</option>
+                    <option>Son</option>
+                    <option>Daughter</option>
+                    <option>Brother</option>
+                    <option>Sister</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div className="nom-field">
+                  <label className="nom-label">Date of Birth</label>
+                  <input
+                    className="nom-input"
+                    type="date"
+                    value={nomineeDraft.dob}
+                    onChange={e => setNomineeDraft({ ...nomineeDraft, dob: e.target.value })}
+                  />
+                </div>
+                <button
+                  className="cta-btn cta-primary nom-save-btn"
+                  onClick={() => { setNominee({ ...nomineeDraft }); setShowNomineeSheet(false); }}
+                >
+                  Save Nominee
+                </button>
               </div>
             </motion.div>
           </>
