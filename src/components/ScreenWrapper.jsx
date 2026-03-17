@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import './ScreenWrapper.css'
 
@@ -8,6 +9,15 @@ const variants = {
 }
 
 export default function ScreenWrapper({ direction, dark, children, bottomBar }) {
+  const scrollRef = useRef(null)
+
+  // Reset scroll to top when screen mounts
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0
+    }
+  }, [])
+
   return (
     <motion.div
       className={`screen ${dark ? 'screen--dark' : ''}`}
@@ -18,7 +28,7 @@ export default function ScreenWrapper({ direction, dark, children, bottomBar }) 
       exit="exit"
       transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
     >
-      <div className="screen-scroll">
+      <div className="screen-scroll" ref={scrollRef}>
         {children}
       </div>
       {bottomBar && (
