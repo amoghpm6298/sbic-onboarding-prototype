@@ -58,16 +58,143 @@
 }
 
 .pd-label {
-  font-size: 11px;
+  font-size: 10px;
   color: #999;
   font-weight: 500;
-  margin-bottom: 4px;
+  margin-top: 4px;
 }
 
 .pd-value {
   font-size: 14px;
   font-weight: 700;
+  color: #1a1a2e;
+}
+
+/* Payment method tabs */
+.pay-method-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.pay-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 12px;
+  background: #f8f9fa;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pay-tab:hover { border-color: #e0e0e0; }
+.pay-tab.active {
+  border-color: #1FA8E1;
+  background: #f0f9ff;
   color: #1FA8E1;
+}
+
+/* Card form */
+.card-form {
+  margin-bottom: 20px;
+}
+
+.form-field {
+  margin-bottom: 14px;
+}
+
+.card-name-field {
+  margin-bottom: 14px;
+}
+
+.ff-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.ff-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  background: #f8f9fa;
+}
+
+.card-form-row {
+  display: flex;
+  gap: 12px;
+}
+.card-form-row .form-field { flex: 1; }
+
+/* Net banking */
+.nb-section {
+  margin-bottom: 20px;
+}
+
+.nb-bank-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 12px;
+  background: #fff;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.nb-bank-option.active {
+  border-color: #1FA8E1;
+  background: #f0f9ff;
+}
+
+.nb-bank-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.nb-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.nb-bank-option.active .nb-radio {
+  border-color: #1FA8E1;
+}
+.nb-radio-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1FA8E1;
+}
+
+.nb-info-text {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  margin-top: 8px;
 }
 
 .high-interest-badge {

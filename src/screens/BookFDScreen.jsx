@@ -119,6 +119,34 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
         <span className="cl-value">{fmtINR(creditLimit)}</span>
       </div>
 
+      {/* Maturity option */}
+      <div className="section-title">On Maturity</div>
+      <div className="maturity-toggle">
+        <button
+          className={`maturity-opt ${fdConfig.maturityAction === 'reinvest' || !fdConfig.maturityAction ? 'active' : ''}`}
+          onClick={() => update('maturityAction', 'reinvest')}
+        >
+          <span className="mat-title">Reinvest</span>
+          <span className="mat-desc">Auto-renew FD</span>
+        </button>
+        <button
+          className={`maturity-opt ${fdConfig.maturityAction === 'payout' ? 'active' : ''}`}
+          onClick={() => update('maturityAction', 'payout')}
+        >
+          <span className="mat-title">Pay to Account</span>
+          <span className="mat-desc">Credit to bank</span>
+        </button>
+      </div>
+
+      {/* Nominee note */}
+      <div className="nominee-note">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+          <circle cx="8" cy="6" r="3" stroke="#1FA8E1" strokeWidth="1.2"/>
+          <path d="M3 14c0-3 2.2-5 5-5s5 2 5 5" stroke="#1FA8E1" strokeWidth="1.2" strokeLinecap="round"/>
+        </svg>
+        <span>Nominee details will be carried from your existing profile</span>
+      </div>
+
       {/* Info note */}
       <div className="fd-info-note">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
