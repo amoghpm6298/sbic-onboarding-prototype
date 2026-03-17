@@ -8,10 +8,10 @@ function fmtINR(n) {
 }
 
 const UPI_APPS = [
-  { id: 'phonepe', name: 'PhonePe', color: '#5f259f', icon: 'P' },
-  { id: 'gpay', name: 'Google Pay', color: '#4285F4', icon: 'G' },
-  { id: 'cred', name: 'CRED', color: '#1a1a2e', icon: 'C' },
-  { id: 'paytm', name: 'Paytm', color: '#00BAF2', icon: 'P' },
+  { id: 'phonepe', name: 'PhonePe', logo: '/phonepe.jpg' },
+  { id: 'gpay', name: 'Google Pay', logo: '/gpay.png' },
+  { id: 'cred', name: 'CRED', logo: '/cred.png' },
+  { id: 'paytm', name: 'Paytm', logo: '/paytm.png' },
 ]
 
 export default function PaymentScreen({ direction, fdConfig, rate, creditLimit, maturity, onNext, onBack }) {
@@ -80,9 +80,7 @@ export default function PaymentScreen({ direction, fdConfig, rate, creditLimit, 
               className={`upi-app-circle ${selectedApp === app.id ? 'active' : ''}`}
               onClick={() => setSelectedApp(app.id)}
             >
-              <div className="upi-icon-circle" style={{ background: app.color }}>
-                {app.icon}
-              </div>
+              <img className="upi-icon-img" src={app.logo} alt={app.name} />
               <span className="upi-app-label">{app.name}</span>
             </button>
           ))}

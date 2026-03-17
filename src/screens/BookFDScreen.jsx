@@ -8,10 +8,10 @@ const BANKS = [
   { id: 'HDFC', name: 'HDFC Bank', logo: '/HDFC-LOGO.png', tenure: '2Y', rate: '7.25%' },
   { id: 'ICICI', name: 'ICICI Bank', logo: '/icici.jpg', tenure: '2Y', rate: '7.10%' },
   { id: 'Kotak', name: 'Kotak Mahindra Bank', logo: '/kotak.png', tenure: '2Y', rate: '7.40%' },
-  { id: 'Axis', name: 'Axis Bank', color: '#800020', initials: 'AX', tenure: '2Y', rate: '7.25%' },
-  { id: 'PNB', name: 'Punjab National Bank', color: '#6b2fa0', initials: 'PNB', tenure: '2Y', rate: '7.05%' },
-  { id: 'BOB', name: 'Bank of Baroda', color: '#f58220', initials: 'BoB', tenure: '2Y', rate: '7.10%' },
-  { id: 'Canara', name: 'Canara Bank', color: '#0066b3', initials: 'CB', tenure: '2Y', rate: '7.15%' },
+  { id: 'Axis', name: 'Axis Bank', logo: '/axi.png', tenure: '2Y', rate: '7.25%' },
+  { id: 'PNB', name: 'Punjab National Bank', logo: '/pnb.avif', tenure: '2Y', rate: '7.05%' },
+  { id: 'BOB', name: 'Bank of Baroda', logo: '/bob.png', tenure: '2Y', rate: '7.10%' },
+  { id: 'Canara', name: 'Canara Bank', logo: '/canara.png', tenure: '2Y', rate: '7.15%' },
 ]
 
 const AMOUNTS = [25000, 50000, 100000, 200000]
@@ -22,14 +22,7 @@ function fmtINR(n) {
 }
 
 function BankLogo({ bank, size = 40 }) {
-  if (bank.logo) {
-    return <img className="bank-logo" src={bank.logo} alt={bank.name} style={{ width: size, height: size }} />
-  }
-  return (
-    <div className="bank-logo-ph" style={{ background: bank.color, width: size, height: size, fontSize: size < 32 ? 8 : 11 }}>
-      {bank.initials}
-    </div>
-  )
+  return <img className="bank-logo" src={bank.logo} alt={bank.name} style={{ width: size, height: size }} />
 }
 
 export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, creditLimit, maturity, onNext, onBack }) {
