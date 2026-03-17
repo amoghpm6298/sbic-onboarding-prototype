@@ -1,185 +1,151 @@
+/* Summary card */
 .pay-summary-card {
-  background: #292075;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 20px;
-  color: #fff;
+  background: #f8f9fa;
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+  padding: 24px 20px;
+  margin-bottom: 24px;
 }
 
-.pay-sum-row {
+.pay-label {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.pay-amount {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+
+.pay-bank-row {
   display: flex;
-  justify-content: space-between;
-  padding: 7px 0;
-  font-size: 13px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.pay-sum-row:last-child { border-bottom: none; }
-.psl { opacity: 0.65; font-weight: 500; }
-.psv { font-weight: 700; }
-.pay-sum-row.highlight .psv { color: #5ee8a0; font-size: 15px; }
-
-/* Method tabs */
-.method-tabs {
-  display: flex;
-  gap: 0;
-  margin-bottom: 16px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1.5px solid #e0e0e0;
-}
-
-.method-tab {
-  flex: 1;
-  padding: 12px 8px;
-  border: none;
-  background: #fff;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.method-tab + .method-tab {
-  border-left: 1.5px solid #e0e0e0;
-}
-
-.method-tab.active {
-  background: #292075;
-  color: #fff;
-}
-
-/* UPI apps */
-.upi-apps {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 8px;
   margin-bottom: 20px;
 }
 
-.upi-app {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 10px;
-  background: #fff;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
-  width: 100%;
-  text-align: left;
-}
-.upi-app:hover { border-color: #ccc; }
-.upi-app.active {
-  border-color: #292075;
-  background: #f0eef8;
-}
-
-.upi-app-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 800;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.upi-app-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  flex: 1;
-}
-.upi-app.active .upi-app-name { color: #292075; }
-
-.upi-radio {
-  width: 20px;
-  height: 20px;
+.pay-bank-dot {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  border: 2px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.15s;
-}
-.upi-app.active .upi-radio { border-color: #292075; }
-.upi-radio-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #292075;
+  background: #16a34a;
 }
 
-/* Net banking */
-.nb-info {
-  margin-bottom: 20px;
-}
-
-.nb-bank-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: #f8f9fb;
-  border-radius: 10px;
+.pay-bank-name {
   font-size: 13px;
   color: #666;
-  line-height: 1.5;
+  font-weight: 500;
 }
 
-.nb-icon {
-  font-size: 24px;
-  flex-shrink: 0;
+.pay-details-grid {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
 }
 
-/* Card form */
-.card-form {
-  margin-bottom: 20px;
+.pay-detail {
+  flex: 1;
+  text-align: center;
 }
 
-.form-field {
-  margin-bottom: 12px;
+.pay-detail:not(:last-child) {
+  border-right: 1px solid #f0f0f0;
 }
 
-.ff-label {
-  display: block;
+.pd-label {
+  font-size: 11px;
+  color: #999;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.pd-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.high-interest-badge {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 700;
+  color: #16a34a;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 4px;
+  vertical-align: middle;
+  letter-spacing: 0.3px;
+}
+
+/* UPI apps - horizontal circles */
+.upi-apps-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 28px;
+  padding: 8px 0;
+}
+
+.upi-app-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px;
+  border-radius: 12px;
+  transition: all 0.15s;
+}
+
+.upi-app-circle.active {
+  background: #f8f9fa;
+}
+
+.upi-icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  transition: all 0.15s;
+}
+
+.upi-app-circle.active .upi-icon-circle {
+  box-shadow: 0 0 0 2px #1a1a2e;
+}
+
+.upi-app-label {
   font-size: 11px;
   font-weight: 600;
   color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  margin-bottom: 6px;
 }
 
-.ff-input {
-  width: 100%;
-  padding: 13px 14px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  background: #f8f9fb;
+.upi-app-circle.active .upi-app-label {
+  color: #1a1a2e;
 }
 
-.card-form-row {
-  display: flex;
-  gap: 12px;
-}
-.card-form-row .form-field { flex: 1; }
-
+/* Secure badge */
 .secure-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   text-align: center;
-  font-size: 11px;
+  font-size: 12px;
   color: #999;
   padding: 8px 0;
 }
@@ -190,80 +156,118 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  min-height: 460px;
   text-align: center;
+  background: #fff;
 }
 
-.processing-spinner {
-  margin-bottom: 0;
-}
-
-.processing-sub {
-  font-size: 13px;
-  color: #999;
-  margin-top: 8px;
+/* Concentric circles */
+.concentric-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 32px;
 }
 
-.processing-steps {
-  width: 100%;
-  max-width: 260px;
-}
-
-.proc-step {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  font-size: 13px;
-  font-weight: 500;
-  color: #ccc;
-  transition: color 0.3s;
-}
-.proc-step.active { color: #cc8800; }
-.proc-step.done { color: #1a8a4a; }
-
-.proc-icon {
-  width: 22px;
-  height: 22px;
+.concentric-circle {
+  position: absolute;
   border-radius: 50%;
+  border: 1px solid #e0e0e0;
+}
+
+.c1 {
+  width: 180px;
+  height: 180px;
+}
+.c2 {
+  width: 140px;
+  height: 140px;
+}
+.c3 {
+  width: 100px;
+  height: 100px;
+}
+.c4 {
+  width: 64px;
+  height: 64px;
+}
+
+.center-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1a1a2e;
+  position: relative;
+  z-index: 2;
+}
+
+.center-check {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #16a34a;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  background: #f0f0f0;
-  flex-shrink: 0;
-  transition: all 0.3s;
+  position: relative;
+  z-index: 2;
 }
-.proc-step.active .proc-icon { background: #fff8e6; color: #cc8800; }
-.proc-step.done .proc-icon { background: #e6f9f0; color: #1a8a4a; }
 
-/* Success */
-.pay-success-screen {
+.proc-text-wrap {
+  margin-bottom: 32px;
+}
+
+.proc-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.proc-title-success {
+  color: #16a34a;
+}
+
+.proc-sub {
+  font-size: 13px;
+  color: #999;
+  margin-top: 6px;
+}
+
+/* DICGC badge */
+.dicgc-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #f8f9fa;
+  border: 1px solid #f0f0f0;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.dicgc-icon {
+  flex-shrink: 0;
+}
+
+.dicgc-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-  text-align: center;
+  gap: 2px;
 }
 
-.pay-success-circle {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: #e6f9f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.pay-success-tag {
+.dicgc-main {
   font-size: 13px;
-  color: #292075;
   font-weight: 600;
-  background: #f0eef8;
-  padding: 10px 20px;
-  border-radius: 10px;
+  color: #333;
+}
+
+.dicgc-sub {
+  font-size: 11px;
+  color: #999;
+  font-weight: 500;
 }

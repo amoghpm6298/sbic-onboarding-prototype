@@ -1,22 +1,22 @@
 .congrats-title {
   color: #1FA8E1 !important;
-  font-size: 26px !important;
+  font-size: 28px !important;
   font-weight: 800;
   text-align: center;
 }
 
 .congrats-sub {
   color: rgba(255,255,255,0.55);
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
-  line-height: 1.5;
-  margin-top: 6px;
-  margin-bottom: 24px;
+  line-height: 1.6;
+  margin-top: 8px;
+  margin-bottom: 28px;
 }
 
 .card-image-wrap {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .card-image {
@@ -28,50 +28,50 @@
 .dark-detail-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 28px;
 }
 
 .dark-detail-item {
   background: rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 18px;
 }
 
 .ddl {
-  font-size: 10px;
+  font-size: 11px;
   color: rgba(255,255,255,0.4);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   font-weight: 600;
 }
 
 .ddv {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #fff;
 }
 
-.ddv.green { color: #5ee8a0; }
+.ddv.green { color: #16a34a; }
 
 .privileges-title {
   color: #fff;
   font-size: 16px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   margin-top: 0;
 }
 
 .benefit-row {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 14px 16px;
+  gap: 16px;
+  padding: 18px 20px;
   background: rgba(255,255,255,0.04);
-  border-radius: 12px;
-  margin-bottom: 10px;
+  border-radius: 14px;
+  margin-bottom: 12px;
 }
 
 .benefit-emoji {
@@ -82,14 +82,14 @@
 }
 
 .bt-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .bt-desc {
-  font-size: 11px;
+  font-size: 12px;
   color: rgba(255,255,255,0.5);
-  line-height: 1.4;
+  line-height: 1.5;
 }

@@ -1,56 +1,64 @@
-.entry-hero {
+.entry-hero-text {
   text-align: center;
-  margin-bottom: 20px;
+  padding: 32px 0 28px;
 }
 
-.hero-emoji {
-  font-size: 52px;
-  height: 120px;
-  background: linear-gradient(135deg, #e8f4fd, #d4edfc);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.entry-title {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: #1a1a2e !important;
+  margin-bottom: 12px !important;
+  line-height: 1.2;
 }
 
-.entry-content {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.entry-subtitle {
-  font-size: 13px;
+.entry-tagline {
+  font-size: 14px;
   color: #888;
-  line-height: 1.5;
-  margin-top: 8px;
+  line-height: 1.6;
+  max-width: 280px;
+  margin: 0 auto;
 }
 
 .benefits-list {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .benefit-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 0;
-  font-size: 13px;
+  gap: 16px;
+  padding: 16px 0;
+  font-size: 14px;
   font-weight: 500;
   color: #333;
   border-bottom: 1px solid #f0f0f0;
 }
 .benefit-item:last-child { border-bottom: none; }
 
-.benefit-emoji {
-  font-size: 20px;
+.benefit-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f0fdf4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  width: 28px;
-  text-align: center;
 }
 
-.prefill-note {
+.benefit-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.trust-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   text-align: center;
-  font-size: 11px;
+  font-size: 12px;
   color: #bbb;
-  margin-top: 12px;
+  margin-top: 16px;
+  justify-content: center;
 }
