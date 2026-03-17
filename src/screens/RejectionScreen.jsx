@@ -82,15 +82,30 @@ export default function RejectionScreen({ direction, onNext }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
       >
-        <div className="rej-hope-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" fill="#1FA8E1" opacity="0.15"/>
-            <path d="M8 12l3 3 5-6" stroke="#1FA8E1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-        <div className="rej-hope-text">
-          <p className="rej-hope-title">Don't worry, you can still get a Credit Card!</p>
-          <p className="rej-hope-desc">Apply for an FD-backed Secured Credit Card. Book a Fixed Deposit and get an SBI Card instantly.</p>
+        <p className="rej-hope-title">Don't worry, you can still get a Credit Card!</p>
+        <p className="rej-hope-desc">Apply for an FD-backed Secured Credit Card. Book a Fixed Deposit with any bank and get an SBI Card instantly.</p>
+
+        <div className="rej-benefits">
+          <div className="rej-benefit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#1FA8E1" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#1FA8E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <span>Book FD with <strong>any bank</strong> of your choice</span>
+          </div>
+          <div className="rej-benefit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#16a34a" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <span>Earn <strong>highest interest rates</strong> up to 7.5% p.a.</span>
+          </div>
+          <div className="rej-benefit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#1FA8E1" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#1FA8E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <span><strong>Zero annual fee</strong> for first 4 years</span>
+          </div>
+          <div className="rej-benefit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#16a34a" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <span><strong>Build your credit score</strong> for future upgrades</span>
+          </div>
+          <div className="rej-benefit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="#1FA8E1" opacity="0.2"/><path d="M5 8l2 2 4-4" stroke="#1FA8E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <span>FD insured up to <strong>₹5 lakh by DICGC</strong></span>
+          </div>
         </div>
       </motion.div>
 
