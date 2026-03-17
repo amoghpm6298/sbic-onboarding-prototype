@@ -1,3 +1,12 @@
+/* Dark hero top section */
+.card-hero {
+  background: linear-gradient(180deg, #0a0825 0%, #151240 100%);
+  margin: -24px -24px 0;
+  padding: 32px 24px 28px;
+  text-align: center;
+  border-radius: 0 0 24px 24px;
+}
+
 .congrats-title {
   color: #1FA8E1 !important;
   font-size: 28px !important;
@@ -11,85 +20,82 @@
   text-align: center;
   line-height: 1.6;
   margin-top: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .card-image-wrap {
   text-align: center;
-  margin-bottom: 28px;
 }
 
 .card-image {
-  width: 270px;
+  width: 240px;
   border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(31,168,225,0.25), 0 0 60px rgba(31,168,225,0.08);
+  box-shadow: 0 8px 32px rgba(31,168,225,0.3), 0 0 60px rgba(31,168,225,0.1);
 }
 
-.dark-detail-grid {
+/* White details section */
+.card-details-section {
+  padding-top: 24px;
+}
+
+.detail-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
-.dark-detail-item {
-  background: rgba(255,255,255,0.06);
+.detail-item {
+  background: #f8f9fa;
+  border: 1px solid #f0f0f0;
   border-radius: 14px;
-  padding: 18px;
+  padding: 16px;
 }
 
-.ddl {
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
+.detail-label {
+  font-size: 10px;
+  color: #999;
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 600;
 }
 
-.ddv {
+.detail-value {
   font-size: 15px;
   font-weight: 700;
-  color: #fff;
+  color: #1a1a2e;
 }
 
-.ddv.green { color: #16a34a; }
+.detail-value.green { color: #16a34a; }
+.detail-value.blue { color: #1FA8E1; }
 
-.privileges-title {
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 20px;
-  margin-top: 0;
-}
-
-.benefit-row {
+/* Privileges */
+.privilege-row {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  padding: 18px 20px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 14px;
-  margin-bottom: 12px;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f5f5f5;
 }
+.privilege-row:last-child { border-bottom: none; }
 
-.benefit-emoji {
-  font-size: 26px;
+.privilege-emoji {
+  font-size: 24px;
   flex-shrink: 0;
-  width: 36px;
+  width: 32px;
   text-align: center;
 }
 
-.bt-title {
+.privilege-title {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
-  margin-bottom: 4px;
+  color: #1a1a2e;
+  margin-bottom: 3px;
 }
 
-.bt-desc {
+.privilege-desc {
   font-size: 12px;
-  color: rgba(255,255,255,0.5);
+  color: #888;
   line-height: 1.5;
 }

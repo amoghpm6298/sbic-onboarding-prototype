@@ -34,70 +34,73 @@ const benefits = [
   },
 ]
 
-export default function CardEligibilityScreen({ direction, creditLimit, onNext, onBack }) {
+export default function CardEligibilityScreen({ direction, creditLimit, onNext }) {
   return (
     <ScreenWrapper
       direction={direction}
-      dark
-      bottomBar={
-        <CtaButton onClick={onNext}>Avail Card</CtaButton>
-      }
+      bottomBar={<CtaButton onClick={onNext}>Avail Card</CtaButton>}
     >
-      <motion.h1
-        className="congrats-title"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        Congratulations!
-      </motion.h1>
-      <p className="congrats-sub">Your SBI Card Unnati is ready!<br />Review your card details below.</p>
+      {/* Dark hero section */}
+      <div className="card-hero">
+        <motion.h1
+          className="congrats-title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          Congratulations!
+        </motion.h1>
+        <p className="congrats-sub">Your SBI Card Unnati is ready!<br />Review your card details below.</p>
 
-      <motion.div
-        className="card-image-wrap"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.3, type: 'spring', stiffness: 150 }}
-      >
-        <img src="/sbic-unnati-card.webp" alt="SBI Card Unnati" className="card-image" />
-      </motion.div>
-
-      <div className="dark-detail-grid">
-        <div className="dark-detail-item">
-          <div className="ddl">Card Type</div>
-          <div className="ddv">SBI Card Unnati</div>
-        </div>
-        <div className="dark-detail-item">
-          <div className="ddl">Credit Limit</div>
-          <div className="ddv">{fmtINR(creditLimit)}</div>
-        </div>
-        <div className="dark-detail-item">
-          <div className="ddl">Annual Fee</div>
-          <div className="ddv green">₹499 (waived 4 yrs)</div>
-        </div>
-        <div className="dark-detail-item">
-          <div className="ddl">Reward Points</div>
-          <div className="ddv">1 / ₹100</div>
-        </div>
+        <motion.div
+          className="card-image-wrap"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.3, type: 'spring', stiffness: 150 }}
+        >
+          <img src="/sbic-unnati-card.webp" alt="SBI Card Unnati" className="card-image" />
+        </motion.div>
       </div>
 
-      <h2 className="privileges-title">Privileges on SBI Card Unnati</h2>
-
-      {benefits.map((b, i) => (
-        <motion.div
-          className="benefit-row"
-          key={b.title}
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 + i * 0.1 }}
-        >
-          <div className="benefit-emoji">{b.emoji}</div>
-          <div className="benefit-text-wrap">
-            <div className="bt-title">{b.title}</div>
-            <div className="bt-desc">{b.desc}</div>
+      {/* White details section */}
+      <div className="card-details-section">
+        <div className="detail-grid">
+          <div className="detail-item">
+            <div className="detail-label">Card Type</div>
+            <div className="detail-value">SBI Card Unnati</div>
           </div>
-        </motion.div>
-      ))}
+          <div className="detail-item">
+            <div className="detail-label">Credit Limit</div>
+            <div className="detail-value blue">{fmtINR(creditLimit)}</div>
+          </div>
+          <div className="detail-item">
+            <div className="detail-label">Annual Fee</div>
+            <div className="detail-value green">₹499 (waived 4 yrs)</div>
+          </div>
+          <div className="detail-item">
+            <div className="detail-label">Reward Points</div>
+            <div className="detail-value">1 / ₹100</div>
+          </div>
+        </div>
+
+        <div className="section-title" style={{ marginTop: 20 }}>Privileges on SBI Card Unnati</div>
+
+        {benefits.map((b, i) => (
+          <motion.div
+            className="privilege-row"
+            key={b.title}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 + i * 0.08 }}
+          >
+            <div className="privilege-emoji">{b.emoji}</div>
+            <div className="privilege-text">
+              <div className="privilege-title">{b.title}</div>
+              <div className="privilege-desc">{b.desc}</div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </ScreenWrapper>
   )
 }
