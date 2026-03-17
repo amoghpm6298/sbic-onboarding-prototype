@@ -50,7 +50,7 @@ export default function ConfirmationScreen({ direction, fdConfig, rate, goTo }) 
           <svg viewBox="0 0 50 50" width="45" height="45">
             <motion.path
               d="M14 27 L22 35 L38 16"
-              stroke="#1a8a4a"
+              stroke="#16a34a"
               strokeWidth="3"
               fill="none"
               strokeLinecap="round"

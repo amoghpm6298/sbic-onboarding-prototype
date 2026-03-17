@@ -208,8 +208,8 @@
 }
 .amount-pill:hover { border-color: #e0e0e0; }
 .amount-pill.active {
-  border-color: #1a1a2e;
-  background: #1a1a2e;
+  border-color: #292075;
+  background: #292075;
   color: #fff;
 }
 
@@ -251,8 +251,8 @@
 }
 .tenure-pill:hover { border-color: #e0e0e0; }
 .tenure-pill.active {
-  border-color: #1a1a2e;
-  background: #1a1a2e;
+  border-color: #292075;
+  background: #292075;
   color: #fff;
 }
 

@@ -55,10 +55,10 @@
 .cta-btn:active { transform: scale(0.98); }
 
 .cta-primary {
-  background: #1a1a2e;
+  background: #292075;
   color: #fff;
 }
-.cta-primary:hover { background: #12121f; }
+.cta-primary:hover { background: #1e1660; }
 
 .cta-back {
   background: #f5f5f5;
@@ -70,8 +70,8 @@
 
 .cta-outline {
   background: #fff;
-  color: #1a1a2e;
-  border: 1.5px solid #1a1a2e;
+  color: #292075;
+  border: 1.5px solid #292075;
 }
 
 /* Shared form styles */
