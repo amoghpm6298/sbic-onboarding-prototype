@@ -17,7 +17,7 @@
 .pay-amount {
   font-size: 32px;
   font-weight: 800;
-  color: #292075;
+  color: #1FA8E1;
   margin-bottom: 8px;
 }
 
@@ -67,7 +67,7 @@
 .pd-value {
   font-size: 14px;
   font-weight: 700;
-  color: #292075;
+  color: #1FA8E1;
 }
 
 .high-interest-badge {
@@ -125,7 +125,7 @@
 }
 
 .upi-app-circle.active .upi-icon-circle {
-  box-shadow: 0 0 0 2px #292075;
+  box-shadow: 0 0 0 2px #1FA8E1;
 }
 
 .upi-app-label {
@@ -135,7 +135,7 @@
 }
 
 .upi-app-circle.active .upi-app-label {
-  color: #292075;
+  color: #1FA8E1;
 }
 
 /* Secure badge */
@@ -199,7 +199,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #292075;
+  background: #1FA8E1;
   position: relative;
   z-index: 2;
 }
@@ -223,7 +223,7 @@
 .proc-title {
   font-size: 18px;
   font-weight: 700;
-  color: #292075;
+  color: #1FA8E1;
   margin: 0;
 }
 

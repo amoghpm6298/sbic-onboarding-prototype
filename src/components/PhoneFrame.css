@@ -13,20 +13,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  padding: 14px 20px;
+  background: #292075;
   flex-shrink: 0;
-  padding-top: max(12px, env(safe-area-inset-top));
+  padding-top: max(14px, env(safe-area-inset-top));
 }
 
 .top-bar .brand img {
-  height: 28px;
+  height: 26px;
+  filter: brightness(0) invert(1);
 }
 
 .powered-by {
   font-size: 9px;
-  color: #aaa;
+  color: rgba(255,255,255,0.5);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: flex;
@@ -37,7 +37,7 @@
 .hf-logo {
   font-weight: 800;
   font-size: 10px;
-  color: #292075;
+  color: rgba(255,255,255,0.8);
 }
 
 .screen-area {
