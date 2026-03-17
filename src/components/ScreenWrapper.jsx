@@ -2,9 +2,9 @@ import { motion } from 'framer-motion'
 import './ScreenWrapper.css'
 
 const variants = {
-  enter: (dir) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
+  enter: (dir) => ({ x: dir > 0 ? '30%' : '-30%', opacity: 0 }),
   center: { x: 0, opacity: 1 },
-  exit: (dir) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
+  exit: (dir) => ({ x: dir > 0 ? '-15%' : '15%', opacity: 0 }),
 }
 
 export default function ScreenWrapper({ direction, dark, children, bottomBar }) {
@@ -16,7 +16,7 @@ export default function ScreenWrapper({ direction, dark, children, bottomBar }) 
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
     >
       <div className="screen-scroll">
         {children}

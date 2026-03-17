@@ -34,10 +34,9 @@
   gap: 4px;
 }
 
-.hf-logo {
-  font-weight: 800;
-  font-size: 10px;
-  color: #292075;
+.hf-logo-img {
+  height: 14px;
+  vertical-align: middle;
 }
 
 .screen-area {

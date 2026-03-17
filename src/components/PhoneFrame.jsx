@@ -8,7 +8,7 @@ export default function PhoneFrame({ stepper, children }) {
           <img src="/sbi-card-logo.png" alt="SBI Card" />
         </div>
         <div className="powered-by">
-          Powered by <span className="hf-logo">HYPERFACE</span>
+          Powered by <img src="/hyperface-logo.png" alt="Hyperface" className="hf-logo-img" />
         </div>
       </div>
       {stepper}
