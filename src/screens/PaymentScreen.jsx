@@ -7,6 +7,12 @@ function fmtINR(n) {
   return '\u20B9' + n.toLocaleString('en-IN')
 }
 
+function fmtTenure(months) {
+  if (months < 12) return `${months}M`
+  if (months % 12 === 0) return `${months / 12}Y`
+  return `${Math.floor(months / 12)}Y ${months % 12}M`
+}
+
 const UPI_APPS = [
   { id: 'phonepe', name: 'PhonePe', logo: '/phonepe.jpg' },
   { id: 'gpay', name: 'Google Pay', logo: '/gpay.png' },
@@ -46,7 +52,7 @@ export default function PaymentScreen({ direction, fdConfig, rate, creditLimit, 
           <div className="pay-amount">{fmtINR(fdConfig.amount)}</div>
           <div className="pay-bank-row">
             <div className="pay-bank-dot" />
-            <span className="pay-bank-name">{fdConfig.bank} &middot; {fdConfig.tenure}{fdConfig.tenure === 1 ? ' Year' : ' Years'}</span>
+            <span className="pay-bank-name">{fdConfig.bank} &middot; {fmtTenure(fdConfig.tenure)}</span>
           </div>
 
           <div className="pay-details-grid">

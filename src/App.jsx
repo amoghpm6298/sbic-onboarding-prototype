@@ -11,17 +11,15 @@ import CardEligibilityScreen from './screens/CardEligibilityScreen'
 import ConfirmationScreen from './screens/ConfirmationScreen'
 import './App.css'
 
-const STEPS = ['KYC', 'FD Details', 'Book FD', 'Card', 'Done']
+const STEPS = ['FD Setup', 'KYC', 'Book FD', 'Card', 'Done']
+const STEP_TO_STEPPER = { 2: 1, 3: 2, 4: 3, 5: 3, 7: 4, 8: 5 }
 
 const RATES = {
-  SBI: { 1: 6.80, 2: 7.10, 3: 7.25, 5: 6.50 },
-  HDFC: { 1: 7.00, 2: 7.25, 3: 7.40, 5: 7.00 },
-  ICICI: { 1: 6.90, 2: 7.10, 3: 7.25, 5: 6.90 },
-  Kotak: { 1: 7.20, 2: 7.40, 3: 7.50, 5: 7.10 },
-  Axis: { 1: 7.10, 2: 7.25, 3: 7.30, 5: 7.00 },
-  PNB: { 1: 6.90, 2: 7.05, 3: 7.15, 5: 6.80 },
-  BOB: { 1: 6.85, 2: 7.10, 3: 7.20, 5: 6.75 },
-  Canara: { 1: 6.90, 2: 7.15, 3: 7.30, 5: 6.85 },
+  Karnataka: { 6: 6.60, 12: 7.00, 18: 7.25, 24: 7.35, 36: 7.40, 60: 7.10 },
+  Allahabad: { 6: 6.50, 12: 6.80, 18: 7.00, 24: 7.10, 36: 7.25, 60: 6.80 },
+  SIB:       { 6: 6.75, 12: 7.10, 18: 7.25, 24: 7.40, 36: 7.50, 60: 7.20 },
+  KVB:       { 6: 6.70, 12: 7.00, 18: 7.20, 24: 7.35, 36: 7.45, 60: 7.15 },
+  UCO:       { 6: 6.50, 12: 6.85, 18: 7.05, 24: 7.15, 36: 7.25, 60: 6.90 },
 }
 
 export const CARD_VARIANTS = {
@@ -29,7 +27,8 @@ export const CARD_VARIANTS = {
     id: 'unnati',
     name: 'SBI Card Unnati',
     tag: 'Starter',
-    image: '/sbic-unnati-card.webp',
+    shortName: 'Simple',
+    image: null,
     annualFee: '₹499 (waived 4 yrs)',
     rewardRate: '1 pt / ₹100',
     minFD: 0,
@@ -53,6 +52,7 @@ export const CARD_VARIANTS = {
     id: 'prime',
     name: 'SBI Card Prime',
     tag: 'Premium',
+    shortName: 'Prime',
     image: null,
     annualFee: '₹2,999/yr',
     rewardRate: '10X on premium',
@@ -84,39 +84,54 @@ export default function App() {
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(1)
   const [fdConfig, setFdConfig] = useState({
-    bank: 'SBI',
-    amount: 50000,
-    tenure: 2,
+    bank: 'Karnataka',
+    amount: 100000,
+    tenure: 24,
   })
+  const [selectedCard, setSelectedCard] = useState(null)
 
   const goTo = useCallback((s) => {
-    if (s < 0 || s > 7) return
+    if (s < 0 || s > 8) return
     setDirection(s > step ? 1 : -1)
     setStep(s)
   }, [step])
 
-  const next = useCallback(() => goTo(step + 1), [step, goTo])
-  const back = useCallback(() => goTo(step - 1), [step, goTo])
+  const next = useCallback(() => {
+    if (step === 5) goTo(7)
+    else goTo(step + 1)
+  }, [step, goTo])
 
-  const rate = (RATES[fdConfig.bank] || RATES.SBI)[fdConfig.tenure]
+  const back = useCallback(() => {
+    if (step === 7) goTo(5)
+    else goTo(step - 1)
+  }, [step, goTo])
+
+  const rate = (RATES[fdConfig.bank] || RATES.Karnataka)[fdConfig.tenure]
   const creditLimit = Math.round(fdConfig.amount * 0.8)
-  const maturity = Math.round(fdConfig.amount * Math.pow(1 + rate / 100, fdConfig.tenure))
-  const cardVariant = getCardVariant(fdConfig.amount)
+  const maturity = Math.round(fdConfig.amount * Math.pow(1 + rate / 100, fdConfig.tenure / 12))
+  const eligibleVariant = getCardVariant(fdConfig.amount)
+  const availableVariants = fdConfig.amount >= 500000
+    ? [CARD_VARIANTS.prime, CARD_VARIANTS.unnati]
+    : [CARD_VARIANTS.unnati]
 
-  // Stepper: step 0,1 = no stepper, steps 2-7 map to STEPS[0-4]
-  const stepperCurrent = step - 1
+  const stepperCurrent = STEP_TO_STEPPER[step] || 0
   const showStepper = step > 1
 
   const screens = {
     0: <RejectionScreen key="rejection" direction={direction} onNext={next} />,
     1: <EntryScreen key="entry" direction={direction} onNext={next} />,
-    2: <KYCScreen key="kyc" direction={direction} onNext={next} onBack={back} />,
-    3: <BookFDScreen key="fd" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
-         rate={rate} creditLimit={creditLimit} maturity={maturity} cardVariant={cardVariant} onNext={next} onBack={back} />,
-    4: <PaymentScreen key="pay" direction={direction} fdConfig={fdConfig} rate={rate}
+    2: <BookFDScreen key="fd-config" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
+         rate={rate} creditLimit={creditLimit} maturity={maturity} cardVariant={eligibleVariant}
+         onNext={next} onBack={back} />,
+    3: <KYCScreen key="kyc" direction={direction} onNext={next} onBack={back} />,
+    4: <BookFDScreen key="fd-review" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
+         rate={rate} creditLimit={creditLimit} maturity={maturity} cardVariant={eligibleVariant}
+         bankLocked onNext={next} onBack={back} />,
+    5: <PaymentScreen key="pay" direction={direction} fdConfig={fdConfig} rate={rate}
          creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
-    5: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit} cardVariant={cardVariant} onNext={next} />,
-    6: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={() => goTo(0)} />,
+    7: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit}
+         variants={availableVariants} onSelect={setSelectedCard} onNext={next} onBack={back} />,
+    8: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={() => goTo(0)} />,
   }
 
   // Hide header + stepper on rejection screen

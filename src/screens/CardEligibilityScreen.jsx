@@ -1,22 +1,59 @@
 import { useState, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import ScreenWrapper, { CtaButton } from '../components/ScreenWrapper'
+import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
 import './CardEligibilityScreen.css'
 
 function fmtINR(n) {
   return '₹' + n.toLocaleString('en-IN')
 }
 
-export default function CardEligibilityScreen({ direction, creditLimit, cardVariant, onNext }) {
-  const benefits = cardVariant.benefits
-  const TC_ITEMS = cardVariant.tc
+function CardVisual({ id }) {
+  if (id === 'prime') {
+    return (
+      <div className="prime-card-visual">
+        <div className="prime-card-brand">SBI Card</div>
+        <div className="prime-card-name">PRIME</div>
+        <div className="prime-card-chip" />
+        <div className="prime-card-shine" />
+      </div>
+    )
+  }
+  return (
+    <div className="simple-card-visual">
+      <div className="simple-card-brand">SBI Card</div>
+      <div className="simple-card-chip" />
+      <div className="simple-card-name">SIMPLE</div>
+      <div className="simple-card-shine" />
+    </div>
+  )
+}
+
+export default function CardEligibilityScreen({ direction, creditLimit, variants, onSelect, onNext, onBack }) {
+  const [activeIdx, setActiveIdx] = useState(0)
+  const [swipeDir, setSwipeDir] = useState(1)
+  const cardVariant = variants[activeIdx]
+  const multiCard = variants.length > 1
+
   const [sheet, setSheet] = useState(null) // null | 'tc' | 'otp'
   const [tcAgreed, setTcAgreed] = useState(false)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [otpError, setOtpError] = useState(false)
   const [verifying, setVerifying] = useState(false)
   const otpRefs = useRef([])
+
+  useEffect(() => { setTcAgreed(false) }, [activeIdx])
+
+  const handleDragEnd = (e, info) => {
+    if (!multiCard) return
+    if (info.offset.x < -50 && activeIdx < variants.length - 1) {
+      setSwipeDir(1)
+      setActiveIdx(i => i + 1)
+    } else if (info.offset.x > 50 && activeIdx > 0) {
+      setSwipeDir(-1)
+      setActiveIdx(i => i - 1)
+    }
+  }
 
   const handleAvailCard = () => setSheet('tc')
 
@@ -36,42 +73,32 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
   }
 
   const handleOtpChange = (index, value) => {
-    // Handle paste of full OTP
     if (value.length > 1) {
       const digits = value.replace(/\D/g, '').slice(0, 6).split('')
       const newOtp = [...otp]
       digits.forEach((d, i) => { if (index + i < 6) newOtp[index + i] = d })
       setOtp(newOtp)
       setOtpError(false)
-      const nextIndex = Math.min(index + digits.length, 5)
-      focusInput(nextIndex)
+      focusInput(Math.min(index + digits.length, 5))
       return
     }
-
     if (value && !/^\d$/.test(value)) return
-
     const newOtp = [...otp]
     newOtp[index] = value
     setOtp(newOtp)
     setOtpError(false)
-
-    if (value && index < 5) {
-      focusInput(index + 1)
-    }
+    if (value && index < 5) focusInput(index + 1)
   }
 
   const handleOtpKeyDown = (index, e) => {
-    if (e.key === 'Backspace') {
-      if (!otp[index] && index > 0) {
-        const newOtp = [...otp]
-        newOtp[index - 1] = ''
-        setOtp(newOtp)
-        focusInput(index - 1)
-      }
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const newOtp = [...otp]
+      newOtp[index - 1] = ''
+      setOtp(newOtp)
+      focusInput(index - 1)
     }
   }
 
-  // Focus first OTP input when sheet opens (once only)
   useEffect(() => {
     if (sheet === 'otp') {
       setTimeout(() => {
@@ -81,60 +108,102 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
     }
   }, [sheet])
 
-  const handleOtpFocus = (e) => {
-    e.target.select()
-  }
-
   const handleOtpVerify = () => {
     const code = otp.join('')
-    if (code.length !== 6) {
-      setOtpError(true)
-      return
-    }
-    // Blur input to prevent iOS scroll restoration
+    if (code.length !== 6) { setOtpError(true); return }
     if (document.activeElement) document.activeElement.blur()
     setVerifying(true)
     setTimeout(() => {
       setSheet(null)
-      // Small delay to let sheet animation complete before navigating
+      onSelect?.(cardVariant)
       setTimeout(() => onNext(), 100)
     }, 1500)
   }
 
-  // Auto-submit when all 6 digits entered
   useEffect(() => {
-    if (otp.every(d => d !== '') && sheet === 'otp' && !verifying) {
-      handleOtpVerify()
-    }
+    if (otp.every(d => d !== '') && sheet === 'otp' && !verifying) handleOtpVerify()
   }, [otp, sheet])
 
   return (
     <ScreenWrapper
       direction={direction}
-      bottomBar={<CtaButton onClick={handleAvailCard}>Avail Card</CtaButton>}
+      bottomBar={
+        <>
+          <BackButton onClick={onBack} />
+          <CtaButton onClick={handleAvailCard}>
+            Avail {cardVariant.shortName}
+          </CtaButton>
+        </>
+      }
     >
       {/* Dark hero section */}
       <div className="card-hero">
-        <motion.h1 className="congrats-title" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <motion.h1
+          className="congrats-title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
           Congratulations!
         </motion.h1>
-        <p className="congrats-sub">Your {cardVariant.name} is ready!<br />Review your card details below.</p>
-        <motion.div className="card-image-wrap" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3, type: 'spring', stiffness: 150 }}>
-          {cardVariant.image ? (
-            <img src={cardVariant.image} alt={cardVariant.name} className="card-image" />
-          ) : (
-            <div className="prime-card-visual">
-              <div className="prime-card-brand">SBI Card</div>
-              <div className="prime-card-name">PRIME</div>
-              <div className="prime-card-chip" />
-              <div className="prime-card-shine" />
-            </div>
-          )}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={cardVariant.id + '-sub'}
+            className="congrats-sub"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+          >
+            Your <strong>{cardVariant.name}</strong> is ready!<br />Review your card details below.
+          </motion.p>
+        </AnimatePresence>
+
+        {/* Swipeable card */}
+        <motion.div
+          className="card-image-wrap"
+          drag={multiCard ? 'x' : false}
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.15}
+          onDragEnd={handleDragEnd}
+          style={{ touchAction: 'pan-y', cursor: multiCard ? 'grab' : 'default' }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.3, type: 'spring', stiffness: 150 }}
+        >
+          <AnimatePresence mode="wait" custom={swipeDir}>
+            <motion.div
+              key={cardVariant.id}
+              custom={swipeDir}
+              initial={{ x: swipeDir * 60, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -swipeDir * 60, opacity: 0 }}
+              transition={{ duration: 0.22 }}
+            >
+              <CardVisual id={cardVariant.id} />
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
+
+        {/* Dots + swipe hint */}
+        {multiCard && (
+          <div className="card-swipe-hint">
+            <div className="card-dots">
+              {variants.map((v, i) => (
+                <div
+                  key={v.id}
+                  className={`card-dot ${i === activeIdx ? 'active' : ''}`}
+                  onClick={() => { setSwipeDir(i > activeIdx ? 1 : -1); setActiveIdx(i) }}
+                />
+              ))}
+            </div>
+            <p className="swipe-hint-text">Swipe to compare cards</p>
+          </div>
+        )}
       </div>
 
-      {/* White details section */}
-      <div className="card-details-section">
+      {/* White details section — re-animates on card switch */}
+      <div className="card-details-section" key={cardVariant.id}>
         <div className="detail-grid">
           <div className="detail-item"><div className="detail-label">Card Type</div><div className="detail-value">{cardVariant.name}</div></div>
           <div className="detail-item"><div className="detail-label">Credit Limit</div><div className="detail-value blue">{fmtINR(creditLimit)}</div></div>
@@ -143,8 +212,14 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
         </div>
 
         <div className="section-title" style={{ marginTop: 20 }}>Privileges on {cardVariant.name}</div>
-        {benefits.map((b, i) => (
-          <motion.div className="privilege-row" key={b.title} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.08 }}>
+        {cardVariant.benefits.map((b, i) => (
+          <motion.div
+            className="privilege-row"
+            key={b.title}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 + i * 0.06 }}
+          >
             <div className="privilege-emoji">{b.emoji}</div>
             <div className="privilege-text">
               <div className="privilege-title">{b.title}</div>
@@ -154,7 +229,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
         ))}
       </div>
 
-      {/* ── T&C Bottom Sheet (portal) ── */}
+      {/* T&C sheet */}
       {createPortal(<AnimatePresence>
         {sheet === 'tc' && (
           <>
@@ -168,7 +243,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
                 </button>
               </div>
               <div className="tc-scroll">
-                {TC_ITEMS.map((item, i) => (
+                {cardVariant.tc.map((item, i) => (
                   <div className="tc-item" key={i}>
                     <div className="tc-num">{i + 1}.</div>
                     <p className="tc-text">{item}</p>
@@ -176,7 +251,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
                 ))}
               </div>
               <div className="tc-fixed-footer">
-                <label className="tc-checkbox-row" onClick={() => setTcAgreed(!tcAgreed)}>
+                <label className="tc-checkbox-row" onClick={() => setTcAgreed(v => !v)}>
                   <div className={`tc-checkbox ${tcAgreed ? 'checked' : ''}`}>
                     {tcAgreed && (
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -199,7 +274,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
         )}
       </AnimatePresence>, document.body)}
 
-      {/* ── OTP Bottom Sheet (portal) ── */}
+      {/* OTP sheet */}
       {createPortal(<AnimatePresence>
         {sheet === 'otp' && (
           <>
@@ -208,7 +283,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
               <div className="sheet-handle" />
               <div className="sheet-header">
                 <h2 className="sheet-title">Verify with OTP</h2>
-                <button className="sheet-close" onClick={() => { setSheet(null); setVerifying(false); }}>
+                <button className="sheet-close" onClick={() => { setSheet(null); setVerifying(false) }}>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L15 15M15 5L5 15" stroke="#999" strokeWidth="1.8" strokeLinecap="round"/></svg>
                 </button>
               </div>
@@ -216,7 +291,6 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
                 <p className="otp-desc">
                   We've sent a 6-digit OTP to your registered mobile number <strong>98XXX XXXX32</strong>
                 </p>
-
                 <div className="otp-inputs">
                   {otp.map((digit, i) => (
                     <input
@@ -230,28 +304,20 @@ export default function CardEligibilityScreen({ direction, creditLimit, cardVari
                       value={digit}
                       onChange={e => handleOtpChange(i, e.target.value)}
                       onKeyDown={e => handleOtpKeyDown(i, e)}
-                      onFocus={handleOtpFocus}
+                      onFocus={e => e.target.select()}
                     />
                   ))}
                 </div>
-
                 {otpError && <p className="otp-error">Please enter all 6 digits</p>}
-
                 <div className="otp-resend">
                   Didn't receive OTP? <button className="otp-resend-btn">Resend</button>
                 </div>
-
                 {verifying && (
-                  <motion.div
-                    className="otp-verifying"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
+                  <motion.div className="otp-verifying" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                     <div className="otp-spinner" />
                     <span>Verifying...</span>
                   </motion.div>
                 )}
-
                 {!verifying && (
                   <button className="cta-btn cta-primary otp-verify-btn" onClick={handleOtpVerify}>
                     Verify OTP

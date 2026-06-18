@@ -13,15 +13,89 @@
   margin-bottom: 20px;
 }
 
-.hero-card-wrap {
+/* Two-card hero pair */
+.hero-cards-pair {
   position: relative;
+  width: 230px;
+  height: 120px;
   z-index: 1;
 }
 
-.hero-main-card {
-  width: 200px;
+.entry-card {
+  position: absolute;
+  width: 152px;
+  height: 96px;
   border-radius: 12px;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.entry-card-simple {
+  background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
+  box-shadow: 0 6px 20px rgba(59,130,246,0.22);
+  left: 0;
+  top: 16px;
+  transform: rotate(-5deg);
+  z-index: 1;
+}
+
+.entry-card-premium {
+  background: linear-gradient(135deg, #1e1245 0%, #13102b 60%, #0f1e3a 100%);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  right: 0;
+  top: 0;
+  transform: rotate(4deg);
+  z-index: 2;
+}
+
+.ec-brand {
+  font-size: 8px;
+  font-weight: 700;
+  color: #1d4ed8;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.ec-brand-gold { color: #d97706; }
+
+.ec-chip {
+  width: 22px;
+  height: 16px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #3b82f6, #1FA8E1);
+}
+.ec-chip-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+.ec-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.ec-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e3a8a;
+  letter-spacing: 0.2px;
+}
+.ec-name-gold { color: #f59e0b; }
+
+.ec-tag {
+  font-size: 7px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+.ec-tag-simple {
+  background: rgba(59,130,246,0.15);
+  color: #1d4ed8;
+}
+.ec-tag-premium {
+  background: rgba(245,158,11,0.2);
+  color: #f59e0b;
 }
 
 /* FD badge — left */

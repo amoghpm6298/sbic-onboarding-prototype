@@ -25,6 +25,43 @@
 
 .card-image-wrap {
   text-align: center;
+  user-select: none;
+}
+
+.card-swipe-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.card-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.card-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.card-dot.active {
+  width: 18px;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.swipe-hint-text {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.3px;
+  margin: 0;
 }
 
 .card-image {
@@ -376,6 +413,57 @@
 }
 
 /* ── Prime card visual (CSS fallback when no image) ── */
+/* Simple card visual */
+.simple-card-visual {
+  width: 240px;
+  height: 152px;
+  background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 55%, #60a5fa 100%);
+  border-radius: 14px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(59,130,246,0.3), 0 0 60px rgba(59,130,246,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.simple-card-brand {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e40af;
+  letter-spacing: 0.5px;
+}
+
+.simple-card-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e3a8a;
+  letter-spacing: 3px;
+}
+
+.simple-card-chip {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  width: 36px;
+  height: 28px;
+  background: linear-gradient(135deg, #1FA8E1, #0ea5e9);
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.simple-card-shine {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+
 .prime-card-visual {
   width: 240px;
   height: 152px;

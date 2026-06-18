@@ -35,14 +35,33 @@ export default function EntryScreen({ direction, onNext }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          {/* Card centered */}
-          <motion.div
-            className="hero-card-wrap"
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <img src="/sbic-unnati-card.webp" alt="SBI Card Unnati" className="hero-main-card" />
-          </motion.div>
+          {/* Two card visuals */}
+          <div className="hero-cards-pair">
+            <motion.div
+              className="entry-card entry-card-simple"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <div className="ec-brand">SBI Card</div>
+              <div className="ec-chip" />
+              <div className="ec-footer">
+                <span className="ec-name">Simple</span>
+                <span className="ec-tag ec-tag-simple">Any FD</span>
+              </div>
+            </motion.div>
+            <motion.div
+              className="entry-card entry-card-premium"
+              animate={{ y: [0, -7, 0] }}
+              transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+            >
+              <div className="ec-brand ec-brand-gold">SBI Card</div>
+              <div className="ec-chip ec-chip-gold" />
+              <div className="ec-footer">
+                <span className="ec-name ec-name-gold">Prime</span>
+                <span className="ec-tag ec-tag-premium">₹5L+ FD</span>
+              </div>
+            </motion.div>
+          </div>
 
           {/* FD badge */}
           <motion.div
@@ -93,7 +112,7 @@ export default function EntryScreen({ direction, onNext }) {
       </div>
 
       {/* Card Benefits */}
-      <div className="section-title">SBI Card Unnati Benefits</div>
+      <div className="section-title">Card Benefits</div>
       <div className="card-benefits">
         {cardBenefits.map((b, i) => (
           <motion.div
@@ -119,7 +138,7 @@ export default function EntryScreen({ direction, onNext }) {
           { num: '1', title: 'Choose your FD', desc: 'Pick a bank, amount & tenure' },
           { num: '2', title: 'Complete KYC', desc: 'Verify your identity quickly' },
           { num: '3', title: 'Pay & Book FD', desc: 'UPI, Net Banking or Debit Card' },
-          { num: '4', title: 'Get your Card', desc: 'SBI Card Unnati, instantly' },
+          { num: '4', title: 'Get your Card', desc: 'SBI Card issued instantly' },
         ].map((step, i) => (
           <motion.div
             className="step-row"
