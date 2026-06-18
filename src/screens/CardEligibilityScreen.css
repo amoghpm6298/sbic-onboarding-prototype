@@ -374,3 +374,55 @@
 @keyframes otp-spin {
   to { transform: rotate(360deg); }
 }
+
+/* ── Prime card visual (CSS fallback when no image) ── */
+.prime-card-visual {
+  width: 240px;
+  height: 152px;
+  background: linear-gradient(135deg, #13102b 0%, #1e1245 45%, #0f1e3a 100%);
+  border-radius: 14px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(124,58,237,0.35), 0 0 60px rgba(124,58,237,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.prime-card-shine {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, rgba(196,157,255,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.prime-card-brand {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.5px;
+}
+
+.prime-card-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(196,157,255,0.4);
+}
+
+.prime-card-chip {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  width: 36px;
+  height: 28px;
+  background: linear-gradient(135deg, #c4a020, #f0d060);
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}

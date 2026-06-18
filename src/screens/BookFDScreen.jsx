@@ -14,7 +14,7 @@ const BANKS = [
   { id: 'Canara', name: 'Canara Bank', logo: '/canara.png', tenure: '2Y', rate: '7.15%' },
 ]
 
-const AMOUNTS = [25000, 50000, 100000, 200000]
+const AMOUNTS = [50000, 100000, 300000, 500000]
 const TENURES = [1, 2, 3, 5]
 
 function fmtINR(n) {
@@ -25,7 +25,7 @@ function BankLogo({ bank, size = 40 }) {
   return <img className="bank-logo" src={bank.logo} alt={bank.name} style={{ width: size, height: size }} />
 }
 
-export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, creditLimit, maturity, onNext, onBack }) {
+export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, creditLimit, maturity, cardVariant, onNext, onBack }) {
   const [showBankSheet, setShowBankSheet] = useState(false)
   const [showNomineeSheet, setShowNomineeSheet] = useState(false)
   const [nominee, setNominee] = useState({ name: 'Priya Sharma', relation: 'Spouse', dob: '1994-08-22' })
@@ -83,7 +83,7 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
             className={`amount-pill ${fdConfig.amount === amt ? 'active' : ''}`}
             onClick={() => update('amount', amt)}
           >
-            {amt === 50000 && <span className="popular-tag">POPULAR</span>}
+            {amt === 100000 && <span className="popular-tag">POPULAR</span>}
             {fmtINR(amt)}
           </button>
         ))}
@@ -121,6 +121,28 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
         <span className="cl-label">Credit Limit</span>
         <span className="cl-value">{fmtINR(creditLimit)}</span>
       </div>
+
+      {/* Card tier indicator */}
+      <div className="card-tier-row">
+        <div className="card-tier-left">
+          <div className="card-tier-label">Card you'll get</div>
+          <div className="card-tier-name">{cardVariant.name}</div>
+        </div>
+        <div className={`card-tier-badge card-tier-${cardVariant.id}`}>{cardVariant.tag}</div>
+      </div>
+      {cardVariant.id === 'unnati' && (
+        <div className="card-upgrade-nudge" onClick={() => update('amount', 500000)}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+            <path d="M7 2v10M3 6l4-4 4 4" stroke="#7c3aed" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>Book ₹5,00,000 FD to unlock <strong>SBI Card Prime</strong></span>
+        </div>
+      )}
+      {cardVariant.id === 'prime' && (
+        <div className="card-premium-unlocked">
+          <span>✨ Premium card unlocked</span>
+        </div>
+      )}
 
       {/* Maturity option */}
       <div className="section-title">On Maturity</div>
@@ -169,6 +191,16 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
           <path d="M9 5v1M9 8v5" stroke="#CA8A04" strokeWidth="1.5" strokeLinecap="round"/>
         </svg>
         <span>Your FD earns interest while serving as collateral for your credit card</span>
+      </div>
+
+      {/* FD lock warning */}
+      <div className="fd-lock-warning">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
+          <rect x="3" y="7" width="10" height="8" rx="2" stroke="#b91c1c" strokeWidth="1.3"/>
+          <path d="M5 7V5a3 3 0 016 0v2" stroke="#b91c1c" strokeWidth="1.3" strokeLinecap="round"/>
+          <circle cx="8" cy="11" r="1" fill="#b91c1c"/>
+        </svg>
+        <span>This FD will be <strong>locked for the lifetime of your card</strong>. Early closure is only possible by surrendering the card first.</span>
       </div>
 
       {/* ── Bottom Sheet ── */}
