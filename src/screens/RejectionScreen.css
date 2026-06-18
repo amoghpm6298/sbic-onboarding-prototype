@@ -75,15 +75,73 @@
 
 /* Card preview */
 .rej-offer-card-preview {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin-bottom: 14px;
 }
 
-.rej-card-img {
-  width: 150px;
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(31,168,225,0.2);
+.rej-cards-pair {
+  position: relative;
+  width: 200px;
+  height: 100px;
 }
+
+.rej-card {
+  position: absolute;
+  width: 136px;
+  height: 86px;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.rej-card-simple {
+  background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
+  left: 0;
+  top: 8px;
+  transform: rotate(-4deg);
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(59,130,246,0.25);
+}
+
+.rej-card-prime {
+  background: linear-gradient(135deg, #1e1245 0%, #0f1e3a 100%);
+  right: 0;
+  top: 0;
+  transform: rotate(3deg);
+  z-index: 2;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.rej-card-brand {
+  font-size: 8px;
+  font-weight: 700;
+  color: #1e40af;
+  letter-spacing: 0.4px;
+}
+.rej-brand-light { color: rgba(255,255,255,0.7); }
+
+.rej-card-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e3a8a;
+  letter-spacing: 2px;
+}
+.rej-name-light { color: #fff; }
+
+.rej-card-chip {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 22px;
+  height: 17px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #1FA8E1, #0ea5e9);
+}
+.rej-chip-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
 
 /* Highlights row */
 .rej-offer-highlights {

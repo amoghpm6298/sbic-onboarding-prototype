@@ -6,6 +6,7 @@ import RejectionScreen from './screens/RejectionScreen'
 import EntryScreen from './screens/EntryScreen'
 import BookFDScreen from './screens/BookFDScreen'
 import KYCScreen from './screens/KYCScreen'
+import FDReviewScreen from './screens/FDReviewScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import CardEligibilityScreen from './screens/CardEligibilityScreen'
 import ConfirmationScreen from './screens/ConfirmationScreen'
@@ -124,9 +125,9 @@ export default function App() {
          rate={rate} creditLimit={creditLimit} maturity={maturity} cardVariant={eligibleVariant}
          onNext={next} onBack={back} />,
     3: <KYCScreen key="kyc" direction={direction} onNext={next} onBack={back} />,
-    4: <BookFDScreen key="fd-review" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
-         rate={rate} creditLimit={creditLimit} maturity={maturity} cardVariant={eligibleVariant}
-         bankLocked onNext={next} onBack={back} />,
+    4: <FDReviewScreen key="fd-review" direction={direction} fdConfig={fdConfig}
+         rate={rate} creditLimit={creditLimit} maturity={maturity}
+         onNext={next} onBack={back} onEdit={() => goTo(2)} />,
     5: <PaymentScreen key="pay" direction={direction} fdConfig={fdConfig} rate={rate}
          creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
     7: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit}

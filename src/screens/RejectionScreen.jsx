@@ -42,7 +42,18 @@ export default function RejectionScreen({ direction, onNext }) {
         <p className="rej-offer-desc">Book a Fixed Deposit. Get an SBI Card. Build your credit score.</p>
 
         <div className="rej-offer-card-preview">
-          <img src="/sbic-unnati-card.webp" alt="SBI Card Unnati" className="rej-card-img" />
+          <div className="rej-cards-pair">
+            <div className="rej-card rej-card-simple">
+              <div className="rej-card-brand">SBI Card</div>
+              <div className="rej-card-chip" />
+              <div className="rej-card-name">SIMPLE</div>
+            </div>
+            <div className="rej-card rej-card-prime">
+              <div className="rej-card-brand rej-brand-light">SBI Card</div>
+              <div className="rej-card-chip rej-chip-gold" />
+              <div className="rej-card-name rej-name-light">PRIME</div>
+            </div>
+          </div>
         </div>
 
         <div className="rej-offer-highlights">
@@ -57,8 +68,8 @@ export default function RejectionScreen({ direction, onNext }) {
           </div>
           <div className="rej-hl-divider" />
           <div className="rej-highlight">
-            <div className="rej-hl-value">₹0 Fee</div>
-            <div className="rej-hl-label">For 4 Years</div>
+            <div className="rej-hl-value">2 Cards</div>
+            <div className="rej-hl-label">Simple &amp; Prime</div>
           </div>
         </div>
 
