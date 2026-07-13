@@ -64,6 +64,11 @@
   color: #fff;
 }
 .cta-primary:hover { background: #0095D9; }
+.cta-primary.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.cta-primary.disabled:hover { background: #1FA8E1; }
 
 .cta-back {
   background: #f5f5f5;

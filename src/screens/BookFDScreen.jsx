@@ -1,16 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
+import { EXISTING_FDS } from '../data/existingFds'
+import { BANKS } from '../data/banks'
 import './BookFDScreen.css'
 
-const BANKS = [
-  { id: 'Karnataka', name: 'Karnataka Bank',    logo: '/karbank.jpeg',                        abbr: 'KB',  color: '#7c3aed', rate: '7.35%' },
-  { id: 'Allahabad', name: 'Allahabad Bank',    logo: '/allahbank.jpg',                       abbr: 'AB',  color: '#1d4ed8', rate: '7.10%' },
-  { id: 'SIB',       name: 'South Indian Bank', logo: '/southindian.jpeg',                    abbr: 'SIB', color: '#b91c1c', rate: '7.40%' },
-  { id: 'KVB',       name: 'Karur Vysya Bank',  logo: '/officialkarurvysyabank_logo.jpeg',    abbr: 'KVB', color: '#15803d', rate: '7.35%' },
-  { id: 'UCO',       name: 'UCO Bank',          logo: '/uco.png',                             abbr: 'UCO', color: '#1e40af', rate: '7.15%' },
-]
-
+const MIN_COLLATERAL = 25000
 const QUICK_AMOUNTS = [50000, 100000, 300000, 500000]
 const TENURES = [
   { months: 6,  label: '6M',  display: '6 Months',  popular: false },
@@ -51,13 +46,62 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
   const update = (key, val) => setFdConfig(prev => ({ ...prev, [key]: val }))
   const tenureIdx = Math.max(0, TENURES.findIndex(t => t.months === fdConfig.tenure))
 
+  const selectedBank = BANKS.find(b => b.id === fdConfig.bank) || BANKS[0]
+  const bankFds = EXISTING_FDS[fdConfig.bank] || []
+  const isExistingMode = fdConfig.mode === 'existing'
+  const interestGains = maturity - fdConfig.amount
+
+  // Default-select the top FD when landing on a bank that has existing deposits.
+  useEffect(() => {
+    if (fdConfig.mode === 'existing' && fdConfig.existingFds.length === 0 && bankFds.length > 0) {
+      const top = bankFds[0]
+      setFdConfig(prev => ({ ...prev, existingFds: [top], amount: top.amount, tenure: top.tenure }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fdConfig.mode, fdConfig.bank])
+
   const handleBankSelect = (bankId) => {
-    update('bank', bankId)
+    const fds = EXISTING_FDS[bankId] || []
+    setFdConfig(prev => ({
+      ...prev,
+      bank: bankId,
+      mode: fds.length > 0 ? 'existing' : 'new',
+      existingFds: [],
+      amount: fds.length > 0 ? prev.amount : 100000,
+      tenure: fds.length > 0 ? prev.tenure : 24,
+    }))
     setShowBankSheet(false)
   }
 
-  const selectedBank = BANKS.find(b => b.id === fdConfig.bank) || BANKS[0]
-  const interestGains = maturity - fdConfig.amount
+  const switchToNewFd = () => {
+    setFdConfig(prev => ({ ...prev, mode: 'new', existingFds: [], amount: 100000, tenure: 24 }))
+  }
+
+  const switchToExisting = () => {
+    const top = bankFds[0]
+    setFdConfig(prev => ({ ...prev, mode: 'existing', existingFds: top ? [top] : [], amount: top?.amount ?? prev.amount, tenure: top?.tenure ?? prev.tenure }))
+  }
+
+  const toggleFd = (fd) => {
+    setFdConfig(prev => {
+      const already = prev.existingFds.some(f => f.id === fd.id)
+      const nextFds = already ? prev.existingFds.filter(f => f.id !== fd.id) : [...prev.existingFds, fd]
+      const nextAmount = nextFds.reduce((s, f) => s + f.amount, 0)
+      return { ...prev, existingFds: nextFds, amount: nextAmount }
+    })
+  }
+
+  const allSelected = bankFds.length > 0 && bankFds.every(fd => fdConfig.existingFds.some(f => f.id === fd.id))
+  const toggleSelectAll = () => {
+    setFdConfig(prev => {
+      const nextFds = allSelected ? [] : [...bankFds]
+      const nextAmount = nextFds.reduce((s, f) => s + f.amount, 0)
+      return { ...prev, existingFds: nextFds, amount: nextAmount }
+    })
+  }
+
+  const totalSelected = fdConfig.existingFds.reduce((s, f) => s + f.amount, 0)
+  const canProceed = isExistingMode ? totalSelected >= MIN_COLLATERAL : true
 
   return (
     <ScreenWrapper
@@ -65,12 +109,21 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
       bottomBar={
         <>
           <BackButton onClick={onBack} />
-          <CtaButton onClick={onNext}>Continue</CtaButton>
+          <CtaButton
+            onClick={canProceed ? onNext : undefined}
+            className={!canProceed ? 'disabled' : ''}
+          >
+            {isExistingMode ? 'Proceed' : 'Continue'}
+          </CtaButton>
         </>
       }
     >
-      <h1>{bankLocked ? 'Review Your FD' : 'Configure Your FD'}</h1>
-      <p className="helper-text">{bankLocked ? 'You can still adjust amount and tenure.' : 'Your credit limit will be 80% of the FD amount.'}</p>
+      <h1>{isExistingMode ? 'Select Your FDs' : bankLocked ? 'Review Your FD' : 'Configure Your FD'}</h1>
+      <p className="helper-text">
+        {isExistingMode
+          ? 'The FDs you link will back your card as collateral — the higher the amount, the higher your limit.'
+          : bankLocked ? 'You can still adjust amount and tenure.' : 'Your credit limit will be 80% of the FD amount.'}
+      </p>
 
       {/* Chosen plan card */}
       <div
@@ -95,19 +148,124 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
               )}
             </div>
           </div>
-          <div className="chosen-right">
-            <div className="chosen-rate">
-              <span className="chosen-rate-val">{rate.toFixed(2)}%</span>
-              <span className="chosen-rate-label">p.a. for {fmtTenure(fdConfig.tenure)}</span>
+          {!isExistingMode && (
+            <div className="chosen-right">
+              <div className="chosen-rate">
+                <span className="chosen-rate-val">{rate.toFixed(2)}%</span>
+                <span className="chosen-rate-label">p.a. for {fmtTenure(fdConfig.tenure)}</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                <path d="M6 4l4 4-4 4" stroke="#ccc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </div>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-              <path d="M6 4l4 4-4 4" stroke="#ccc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
+          )}
         </div>
       </div>
 
-      {/* Deposit Amount */}
+      {isExistingMode ? (
+        <>
+          <div className="select-all-row">
+            <span className="select-all-label">Select all that apply</span>
+            <button className="select-all-link" onClick={toggleSelectAll}>
+              {allSelected ? 'Deselect all' : 'Select all'}
+            </button>
+          </div>
+
+          {bankFds.map((fd) => {
+            const isSel = fdConfig.existingFds.some(f => f.id === fd.id)
+            return (
+              <button key={fd.id} className={`efd-select-card ${isSel ? 'selected' : ''}`} onClick={() => toggleFd(fd)}>
+                <div className="efd-select-top">
+                  <div>
+                    <span className="efd-select-amount">{fmtINR(fd.amount)}</span>
+                    <div className="efd-select-account">A/C {fd.accountNo}</div>
+                  </div>
+                  <div className={`efd-checkbox ${isSel ? 'checked' : ''}`}>
+                    {isSel && (
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6L5 9L10 3" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                <div className="efd-select-meta-row">
+                  <div className="efd-meta-col">
+                    <span className="efd-meta-label">Maturity Amount</span>
+                    <span className="efd-meta-val">{fmtINR(fd.maturityAmount)}</span>
+                  </div>
+                  <div className="efd-meta-col">
+                    <span className="efd-meta-label">Maturity Date</span>
+                    <span className="efd-meta-val">{fd.maturityDate}</span>
+                  </div>
+                  <div className="efd-meta-col">
+                    <span className="efd-meta-label">Interest Rate</span>
+                    <span className="efd-meta-val">{fd.rate.toFixed(2)}%</span>
+                  </div>
+                </div>
+              </button>
+            )
+          })}
+
+          <button className="open-new-fd-btn" onClick={switchToNewFd}>
+            + Open a New FD with {selectedBank.name}
+          </button>
+
+          <div className="total-deposit-card">
+            <div>
+              <div className="total-deposit-label">Total Deposit Amount</div>
+              <div className="total-deposit-min">Min {fmtINR(MIN_COLLATERAL)} required</div>
+            </div>
+            <div className="total-deposit-value">{fmtINR(totalSelected)}</div>
+          </div>
+
+          <div className="results-card">
+            <div className="results-col">
+              <div className="results-label">Maturity Amount</div>
+              <div className="results-value">{fmtINR(maturity)}</div>
+            </div>
+            <div className="results-divider" />
+            <div className="results-col">
+              <div className="results-label">Interest Gains</div>
+              <div className="results-value green">+{fmtINR(interestGains)}</div>
+            </div>
+          </div>
+
+          <div className="credit-limit-banner">
+            <span className="cl-label">Probable Credit Limit</span>
+            <span className="cl-value">{fmtINR(creditLimit)}</span>
+          </div>
+
+          <div className="card-variants-hint">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+              <path d="M7 1l1.5 3 3.5.5-2.5 2.5.5 3.5L7 9 4 11l.5-3.5L2 5l3.5-.5L7 1z" stroke="#7c3aed" strokeWidth="1.2" strokeLinejoin="round" fill="none"/>
+            </svg>
+            <span>Higher deposits unlock more card variants</span>
+          </div>
+
+          <div className="fd-info-note">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
+              <circle cx="9" cy="9" r="8" fill="#FEF9C3"/>
+              <path d="M9 5v1M9 8v5" stroke="#CA8A04" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <span>Since these FDs are already on file, no additional KYC is needed — we'll mark a lien and move straight to your card.</span>
+          </div>
+        </>
+      ) : (
+        <>
+          {bankFds.length > 0 && (
+            <>
+              <button className="change-fd-link" onClick={switchToExisting}>Use an existing FD instead</button>
+              <div className="kyc-skip-hint">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                  <circle cx="7" cy="7" r="6" fill="#f0fdf4" stroke="#16a34a" strokeWidth="1"/>
+                  <path d="M4.5 7L6 8.5L9.5 5" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span>You're already KYC verified with {selectedBank.name} — no need to redo it for this FD.</span>
+              </div>
+            </>
+          )}
+
+          {/* Deposit Amount */}
       <div className="section-title">Deposit Amount</div>
       <div className="fd-amount-input-wrap">
         <span className="fd-amt-prefix">₹</span>
@@ -252,6 +410,8 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
         </svg>
         <span>This FD will be <strong>locked for the lifetime of your card</strong>. Early closure is only possible by surrendering the card first.</span>
       </div>
+        </>
+      )}
 
       {/* ── Bottom Sheet ── */}
       <AnimatePresence>

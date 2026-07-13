@@ -665,3 +665,194 @@
   margin-top: 8px;
 }
 .fd-lock-warning strong { font-weight: 700; }
+
+/* Existing-FD inline chooser */
+.change-fd-link {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: -10px 0 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1FA8E1;
+  cursor: pointer;
+}
+
+.kyc-skip-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: #16a34a;
+  font-weight: 500;
+  line-height: 1.5;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.select-all-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.select-all-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.select-all-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1FA8E1;
+  cursor: pointer;
+}
+
+.efd-select-card {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 16px;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 16px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  text-align: left;
+  box-sizing: border-box;
+}
+.efd-select-card:hover { border-color: #cde8f7; }
+.efd-select-card.selected {
+  border-color: #1FA8E1;
+  background: #f0f9ff;
+}
+
+.efd-select-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.efd-select-amount {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+
+.efd-select-account {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.efd-checkbox {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.efd-checkbox.checked {
+  border-color: #1FA8E1;
+  background: #1FA8E1;
+}
+
+.efd-select-meta-row {
+  display: flex;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+.efd-select-card.selected .efd-select-meta-row { border-top-color: #d6ecfa; }
+
+.efd-meta-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.efd-meta-label {
+  font-size: 10px;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.efd-meta-val {
+  font-size: 13px;
+  color: #1a1a2e;
+  font-weight: 700;
+}
+
+.open-new-fd-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1.5px dashed #cde8f7;
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1FA8E1;
+  text-align: center;
+  transition: all 0.15s;
+}
+.open-new-fd-btn:hover { background: #f0f9ff; }
+
+/* Total deposit summary */
+.total-deposit-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f9fa;
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.total-deposit-label {
+  font-size: 13px;
+  color: #1a1a2e;
+  font-weight: 700;
+}
+
+.total-deposit-min {
+  font-size: 11px;
+  color: #999;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.total-deposit-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a1a2e;
+}

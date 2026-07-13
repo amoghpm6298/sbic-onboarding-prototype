@@ -1,15 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
+import { BANKS as BANK_LIST } from '../data/banks'
 import './FDReviewScreen.css'
 
-const BANKS = {
-  Karnataka: { name: 'Karnataka Bank',    logo: '/karbank.jpeg',                     abbr: 'KB',  color: '#7c3aed' },
-  Allahabad: { name: 'Allahabad Bank',    logo: '/allahbank.jpg',                    abbr: 'AB',  color: '#1d4ed8' },
-  SIB:       { name: 'South Indian Bank', logo: '/southindian.jpeg',                 abbr: 'SIB', color: '#b91c1c' },
-  KVB:       { name: 'Karur Vysya Bank',  logo: '/officialkarurvysyabank_logo.jpeg', abbr: 'KVB', color: '#15803d' },
-  UCO:       { name: 'UCO Bank',          logo: '/uco.png',                          abbr: 'UCO', color: '#1e40af' },
-}
+const BANKS = Object.fromEntries(BANK_LIST.map(b => [b.id, b]))
 
 function BankLogo({ bank }) {
   const [err, setErr] = useState(false)

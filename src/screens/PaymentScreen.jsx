@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ScreenWrapper, { CtaButton } from '../components/ScreenWrapper'
+import { getBankName } from '../data/banks'
 import './PaymentScreen.css'
 
 function fmtINR(n) {
@@ -52,7 +53,7 @@ export default function PaymentScreen({ direction, fdConfig, rate, creditLimit, 
           <div className="pay-amount">{fmtINR(fdConfig.amount)}</div>
           <div className="pay-bank-row">
             <div className="pay-bank-dot" />
-            <span className="pay-bank-name">{fdConfig.bank} &middot; {fmtTenure(fdConfig.tenure)}</span>
+            <span className="pay-bank-name">{getBankName(fdConfig.bank)} &middot; {fmtTenure(fdConfig.tenure)}</span>
           </div>
 
           <div className="pay-details-grid">
@@ -198,7 +199,7 @@ export default function PaymentScreen({ direction, fdConfig, rate, creditLimit, 
         <AnimatePresence mode="wait">
           {!processingDone ? (
             <motion.div key="connecting" className="proc-text-wrap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <h2 className="proc-title">Connecting you to {fdConfig.bank}</h2>
+              <h2 className="proc-title">Connecting you to {getBankName(fdConfig.bank)}</h2>
             </motion.div>
           ) : (
             <motion.div key="success" className="proc-text-wrap" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>

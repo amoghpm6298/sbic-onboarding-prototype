@@ -10,17 +10,15 @@ import FDReviewScreen from './screens/FDReviewScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import CardEligibilityScreen from './screens/CardEligibilityScreen'
 import ConfirmationScreen from './screens/ConfirmationScreen'
+import { EXISTING_FDS } from './data/existingFds'
 import './App.css'
 
 const STEPS = ['FD Setup', 'KYC', 'Book FD', 'Card', 'Done']
 const STEP_TO_STEPPER = { 2: 1, 3: 2, 4: 3, 5: 3, 7: 4, 8: 5 }
 
 const RATES = {
-  Karnataka: { 6: 6.60, 12: 7.00, 18: 7.25, 24: 7.35, 36: 7.40, 60: 7.10 },
-  Allahabad: { 6: 6.50, 12: 6.80, 18: 7.00, 24: 7.10, 36: 7.25, 60: 6.80 },
-  SIB:       { 6: 6.75, 12: 7.10, 18: 7.25, 24: 7.40, 36: 7.50, 60: 7.20 },
-  KVB:       { 6: 6.70, 12: 7.00, 18: 7.20, 24: 7.35, 36: 7.45, 60: 7.15 },
-  UCO:       { 6: 6.50, 12: 6.85, 18: 7.05, 24: 7.15, 36: 7.25, 60: 6.90 },
+  SBI: { 6: 6.60, 12: 6.80, 18: 7.00, 24: 7.10, 36: 7.25, 60: 6.50 },
+  KVB: { 6: 6.70, 12: 7.00, 18: 7.20, 24: 7.35, 36: 7.45, 60: 7.15 },
 }
 
 export const CARD_VARIANTS = {
@@ -85,9 +83,11 @@ export default function App() {
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(1)
   const [fdConfig, setFdConfig] = useState({
-    bank: 'Karnataka',
+    bank: 'SBI',
     amount: 100000,
     tenure: 24,
+    mode: 'existing', // 'new' | 'existing'
+    existingFds: [],
   })
   const [selectedCard, setSelectedCard] = useState(null)
 
@@ -97,19 +97,37 @@ export default function App() {
     setStep(s)
   }, [step])
 
+  // KYC is tied to the customer's relationship with the bank, not to any one FD/product —
+  // RBI KYC Master Directions 2016 permit reliance on due diligence already performed, and
+  // banks in practice (e.g. Axis, IDFC FIRST secured-card flows) skip re-KYC for existing customers.
+  const hasBankRelationship = (EXISTING_FDS[fdConfig.bank] || []).length > 0
+
+  // Existing-FD path skips partner KYC, the FD review step, and Payment (the FD is already
+  // funded) — straight to card eligibility. A brand-new FD with a bank you're already KYC'd
+  // with only skips KYC — FDReview + Payment still run since it's genuinely new money.
   const next = useCallback(() => {
-    if (step === 5) goTo(7)
-    else goTo(step + 1)
-  }, [step, goTo])
+    if (step === 2 && fdConfig.mode === 'existing') { goTo(7); return }
+    if (step === 2 && fdConfig.mode === 'new' && hasBankRelationship) { goTo(4); return }
+    if (step === 5) { goTo(7); return }
+    goTo(step + 1)
+  }, [step, goTo, fdConfig.mode, hasBankRelationship])
 
   const back = useCallback(() => {
-    if (step === 7) goTo(5)
-    else goTo(step - 1)
-  }, [step, goTo])
+    if (step === 7 && fdConfig.mode === 'existing') { goTo(2); return }
+    if (step === 7) { goTo(5); return }
+    if (step === 4 && fdConfig.mode === 'new' && hasBankRelationship) { goTo(2); return }
+    goTo(step - 1)
+  }, [step, goTo, fdConfig.mode, hasBankRelationship])
 
-  const rate = (RATES[fdConfig.bank] || RATES.Karnataka)[fdConfig.tenure]
+  const rate = fdConfig.mode === 'existing'
+    ? (fdConfig.existingFds.length
+        ? fdConfig.existingFds.reduce((sum, fd) => sum + fd.rate * fd.amount, 0) / fdConfig.amount
+        : (RATES[fdConfig.bank] || RATES.SBI)[fdConfig.tenure])
+    : (RATES[fdConfig.bank] || RATES.SBI)[fdConfig.tenure]
   const creditLimit = Math.round(fdConfig.amount * 0.8)
-  const maturity = Math.round(fdConfig.amount * Math.pow(1 + rate / 100, fdConfig.tenure / 12))
+  const maturity = fdConfig.mode === 'existing'
+    ? fdConfig.existingFds.reduce((sum, fd) => sum + fd.maturityAmount, 0)
+    : Math.round(fdConfig.amount * Math.pow(1 + rate / 100, fdConfig.tenure / 12))
   const eligibleVariant = getCardVariant(fdConfig.amount)
   const availableVariants = fdConfig.amount >= 500000
     ? [CARD_VARIANTS.prime, CARD_VARIANTS.unnati]

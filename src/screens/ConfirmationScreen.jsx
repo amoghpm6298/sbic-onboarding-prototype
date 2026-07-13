@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import ScreenWrapper, { CtaButton } from '../components/ScreenWrapper'
+import { getBankName } from '../data/banks'
 import './ConfirmationScreen.css'
 
 function fmtINR(n) {
@@ -7,9 +8,18 @@ function fmtINR(n) {
 }
 
 export default function ConfirmationScreen({ direction, fdConfig, rate, goTo }) {
+  const isExisting = fdConfig.mode === 'existing'
   const timeline = [
-    { status: 'done', icon: '✓', title: 'FD Booked', detail: `${fmtINR(fdConfig.amount)} with ${fdConfig.bank} @ ${rate.toFixed(2)}%` },
-    { status: 'done', icon: '✓', title: 'KYC Completed', detail: 'Identity verified successfully' },
+    {
+      status: 'done', icon: '✓',
+      title: isExisting ? 'FD Linked' : 'FD Booked',
+      detail: `${fmtINR(fdConfig.amount)} with ${getBankName(fdConfig.bank)} @ ${rate.toFixed(2)}%`,
+    },
+    {
+      status: 'done', icon: '✓',
+      title: 'KYC Completed',
+      detail: isExisting ? 'Reused from your existing FD — no re-verification needed' : 'Identity verified successfully',
+    },
     { status: 'done', icon: '✓', title: 'Application Submitted', detail: '17 Mar 2026, 9:41 AM' },
     { status: 'pend', icon: '⏲', title: 'Card Approval', detail: 'Within 24 hours' },
     { status: 'future', icon: '📦', title: 'Card Delivery', detail: '5–7 business days' },
