@@ -127,7 +127,7 @@ export default function LandingScreen({ direction, onNext }) {
         {[
           { num: '1', title: 'Tell us about you', desc: 'A few quick personal & address details' },
           { num: '2', title: 'Choose your FD', desc: 'Pick a bank, amount & tenure — or link an FD you already have' },
-          { num: '3', title: 'Complete KYC', desc: 'Verify your identity with the bank (skipped if you already have an FD with them)' },
+          { num: '3', title: 'Complete KYC', desc: 'Verify your identity with the bank you book your FD with (skipped if you already have an FD there)' },
           { num: '4', title: 'Get your Card', desc: 'SBI Card issued instantly' },
         ].map((step, i) => (
           <motion.div
