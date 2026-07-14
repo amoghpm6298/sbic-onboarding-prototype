@@ -125,9 +125,9 @@ export default function LandingScreen({ direction, onNext }) {
       <div className="section-title">How it works</div>
       <div className="steps-visual">
         {[
-          { num: '1', title: 'Tell us about you', desc: 'A few quick details to get started' },
-          { num: '2', title: 'Choose your FD', desc: 'Pick a bank, amount & tenure' },
-          { num: '3', title: 'Complete KYC', desc: 'Verify your identity with the bank' },
+          { num: '1', title: 'Tell us about you', desc: 'A few quick personal & address details' },
+          { num: '2', title: 'Choose your FD', desc: 'Pick a bank, amount & tenure — or link an FD you already have' },
+          { num: '3', title: 'Complete KYC', desc: 'Verify your identity with the bank (skipped if you already have an FD with them)' },
           { num: '4', title: 'Get your Card', desc: 'SBI Card issued instantly' },
         ].map((step, i) => (
           <motion.div

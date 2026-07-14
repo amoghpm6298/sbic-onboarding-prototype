@@ -100,11 +100,12 @@ export function getCardVariant(amount) {
 export default function App() {
   // Step 0 = rejection, 1 = entry (existing-applicant persona)
   // Step 9 = landing, 10 = personal details (general/NTB persona) — converges on step 2
-  const [step, setStep] = useState(0)
+  // NTB is the default entry point — most visitors have no prior SBI relationship.
+  const [step, setStep] = useState(9)
   const [direction, setDirection] = useState(1)
-  const [entryPoint, setEntryPoint] = useState('rejected') // 'rejected' | 'ntb'
+  const [entryPoint, setEntryPoint] = useState('ntb') // 'rejected' | 'ntb'
   const [fdConfig, setFdConfig] = useState(DEFAULT_FD_CONFIG)
-  const [customer, setCustomer] = useState(EXISTING_CUSTOMER)
+  const [customer, setCustomer] = useState(BLANK_CUSTOMER)
   const [selectedCard, setSelectedCard] = useState(null)
   const isNtb = entryPoint === 'ntb'
 
