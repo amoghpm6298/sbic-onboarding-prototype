@@ -1,19 +1,15 @@
 import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
 import './PersonalDetailsScreen.css'
 
-const PAN_RE = /^[A-Z]{5}[0-9]{4}[A-Z]$/
-const MOBILE_RE = /^[6-9]\d{9}$/
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
 export default function PersonalDetailsScreen({ direction, customer, setCustomer, onNext, onBack }) {
   const update = (key, val) => setCustomer(prev => ({ ...prev, [key]: val }))
 
   const isValid =
-    customer.name.trim().length > 2 &&
-    MOBILE_RE.test(customer.phone) &&
-    EMAIL_RE.test(customer.email) &&
+    customer.name.trim().length > 0 &&
+    customer.phone.trim().length > 0 &&
+    customer.email.trim().length > 0 &&
     !!customer.dob &&
-    PAN_RE.test(customer.pan.toUpperCase())
+    customer.pan.trim().length > 0
 
   return (
     <ScreenWrapper

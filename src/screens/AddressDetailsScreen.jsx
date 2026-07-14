@@ -1,8 +1,6 @@
 import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
 import './PersonalDetailsScreen.css'
 
-const PINCODE_RE = /^[1-9]\d{5}$/
-
 const STATES = [
   'Andhra Pradesh', 'Bihar', 'Delhi', 'Gujarat', 'Haryana', 'Karnataka',
   'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Punjab', 'Rajasthan',
@@ -13,9 +11,9 @@ export default function AddressDetailsScreen({ direction, customer, setCustomer,
   const update = (key, val) => setCustomer(prev => ({ ...prev, [key]: val }))
 
   const isValid =
-    customer.addressLine1.trim().length > 4 &&
-    PINCODE_RE.test(customer.pincode) &&
-    customer.city.trim().length > 1 &&
+    customer.addressLine1.trim().length > 0 &&
+    customer.pincode.trim().length > 0 &&
+    customer.city.trim().length > 0 &&
     !!customer.state
 
   return (
