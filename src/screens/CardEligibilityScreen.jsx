@@ -8,6 +8,12 @@ function fmtINR(n) {
   return '₹' + n.toLocaleString('en-IN')
 }
 
+function maskPhone(phone) {
+  if (!phone) return '98XXX XXXX32'
+  if (phone.includes('X')) return phone // already display-masked (existing-applicant demo data)
+  return `${phone.slice(0, 2)}XXX XXXX${phone.slice(8)}`
+}
+
 function CardVisual({ id }) {
   if (id === 'prime') {
     return (
@@ -29,7 +35,7 @@ function CardVisual({ id }) {
   )
 }
 
-export default function CardEligibilityScreen({ direction, creditLimit, variants, bankName, onSelect, onNext, onBack }) {
+export default function CardEligibilityScreen({ direction, creditLimit, variants, bankName, customer, kycSkipped, onSelect, onNext, onBack }) {
   const [activeIdx, setActiveIdx] = useState(0)
   const [swipeDir, setSwipeDir] = useState(1)
   const cardVariant = variants[activeIdx]
@@ -287,15 +293,30 @@ export default function CardEligibilityScreen({ direction, creditLimit, variants
             <motion.div className="sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 28, stiffness: 300 }}>
               <div className="sheet-handle" />
               <div className="sheet-header">
-                <h2 className="sheet-title">Verify with OTP</h2>
+                <h2 className="sheet-title">{kycSkipped ? 'Aadhaar-Linked OTP Verification' : 'Verify with OTP'}</h2>
                 <button className="sheet-close" onClick={() => { setSheet(null); setVerifying(false) }}>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L15 15M15 5L5 15" stroke="#999" strokeWidth="1.8" strokeLinecap="round"/></svg>
                 </button>
               </div>
               <div className="sheet-body otp-body">
-                <p className="otp-desc">
-                  We've sent a 6-digit OTP to your registered mobile number <strong>98XXX XXXX32</strong>
-                </p>
+                {kycSkipped ? (
+                  <>
+                    <p className="otp-desc">
+                      Since we're relying on the KYC already completed by {bankName} for your FD, please verify the OTP sent to your Aadhaar-linked mobile number <strong>{maskPhone(customer?.phone)}</strong> to confirm your identity before we issue your card.
+                    </p>
+                    <div className="kyc-skip-hint">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                        <circle cx="7" cy="7" r="6" fill="#f0fdf4" stroke="#16a34a" strokeWidth="1"/>
+                        <path d="M4.5 7L6 8.5L9.5 5" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>This replaces a full video KYC — your CKYC record already covers identity &amp; address verification.</span>
+                    </div>
+                  </>
+                ) : (
+                  <p className="otp-desc">
+                    We've sent a 6-digit OTP to your registered mobile number <strong>{maskPhone(customer?.phone)}</strong>
+                  </p>
+                )}
                 <div className="otp-inputs">
                   {otp.map((digit, i) => (
                     <input

@@ -180,7 +180,8 @@ export default function App() {
          creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
     6: <ProcessingScreen key="processing" direction={direction} bankName={getBankName(fdConfig.bank)} onNext={next} />,
     7: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit}
-         variants={availableVariants} bankName={getBankName(fdConfig.bank)} onSelect={setSelectedCard} onNext={next} onBack={back} />,
+         variants={availableVariants} bankName={getBankName(fdConfig.bank)} customer={customer}
+         kycSkipped={fdConfig.mode === 'existing'} onSelect={setSelectedCard} onNext={next} onBack={back} />,
     8: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={() => goTo(0)} />,
     9: <LandingScreen key="landing" direction={direction} onNext={next} />,
     10: <PersonalDetailsScreen key="details" direction={direction} customer={customer} setCustomer={setCustomer} onNext={next} onBack={back} />,
