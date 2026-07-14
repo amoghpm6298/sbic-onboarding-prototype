@@ -194,7 +194,7 @@ export default function App() {
     <div className="app-wrapper">
       <div className="demo-entry-switcher">
         <div className="demo-entry-switcher-inner">
-          <button className={entryPoint === 'rejected' ? 'active' : ''} onClick={() => resetEntry('rejected')}>Existing</button>
+          <button className={entryPoint === 'rejected' ? 'active' : ''} onClick={() => resetEntry('rejected')}>Rejected</button>
           <button className={entryPoint === 'ntb' ? 'active' : ''} onClick={() => resetEntry('ntb')}>New (NTB)</button>
         </div>
       </div>
