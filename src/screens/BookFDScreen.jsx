@@ -38,7 +38,7 @@ function BankLogo({ bank, size = 40 }) {
   return <img className="bank-logo" src={bank.logo} alt={bank.name} style={{ width: size, height: size }} onError={() => setErr(true)} />
 }
 
-export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, creditLimit, maturity, cardVariant, bankLocked = false, onNext, onBack }) {
+export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, creditLimit, maturity, cardVariant, bankLocked = false, isNtb = false, onNext, onBack }) {
   const [showBankSheet, setShowBankSheet] = useState(false)
   const [showNomineeSheet, setShowNomineeSheet] = useState(false)
   const [nominee, setNominee] = useState({ name: 'Priya Sharma', relation: 'Spouse', dob: '1994-08-22' })
@@ -47,6 +47,8 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
   const tenureIdx = Math.max(0, TENURES.findIndex(t => t.months === fdConfig.tenure))
 
   const selectedBank = BANKS.find(b => b.id === fdConfig.bank) || BANKS[0]
+  // NTB customers can still already hold an FD with a bank (new to SBI Card, not new to the bank) —
+  // same existing-FD linking flow applies to both personas.
   const bankFds = EXISTING_FDS[fdConfig.bank] || []
   const isExistingMode = fdConfig.mode === 'existing'
   const interestGains = maturity - fdConfig.amount
@@ -255,13 +257,15 @@ export default function BookFDScreen({ direction, fdConfig, setFdConfig, rate, c
           {bankFds.length > 0 && (
             <>
               <button className="change-fd-link" onClick={switchToExisting}>Use an existing FD instead</button>
-              <div className="kyc-skip-hint">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
-                  <circle cx="7" cy="7" r="6" fill="#f0fdf4" stroke="#16a34a" strokeWidth="1"/>
-                  <path d="M4.5 7L6 8.5L9.5 5" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span>You're already KYC verified with {selectedBank.name} — no need to redo it for this FD.</span>
-              </div>
+              {!isNtb && (
+                <div className="kyc-skip-hint">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                    <circle cx="7" cy="7" r="6" fill="#f0fdf4" stroke="#16a34a" strokeWidth="1"/>
+                    <path d="M4.5 7L6 8.5L9.5 5" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span>You're already KYC verified with {selectedBank.name} — no need to redo it for this FD.</span>
+                </div>
+              )}
             </>
           )}
 

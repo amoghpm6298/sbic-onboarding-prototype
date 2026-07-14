@@ -1,7 +1,19 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ScreenWrapper, { CtaButton, BackButton } from '../components/ScreenWrapper'
+import { BANKS, getBankName } from '../data/banks'
 import './KYCScreen.css'
+
+function formatDob(iso) {
+  if (!iso) return '15 Mar 1992'
+  const d = new Date(iso + 'T00:00:00')
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+}
+
+function formatAddress(customer) {
+  const { addressLine1, addressLine2, city, state, pincode } = customer
+  return [addressLine1, addressLine2, city, state, pincode].filter(Boolean).join(', ')
+}
 
 const requirements = [
   { icon: 'camera', text: 'Working camera & microphone' },
@@ -35,12 +47,14 @@ function ReqIcon({ type }) {
   )
 }
 
-export default function KYCScreen({ direction, onNext, onBack }) {
+export default function KYCScreen({ direction, customer, bank, onNext, onBack }) {
   const [phase, setPhase] = useState('prep') // prep | video | success
   const [connected, setConnected] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
   const [doneSteps, setDoneSteps] = useState([])
   const [processingDone, setProcessingDone] = useState(false)
+  const bankName = getBankName(bank)
+  const bankLogo = BANKS.find(b => b.id === bank)?.logo
 
   const startVkyc = useCallback(() => {
     setPhase('video')
@@ -79,6 +93,14 @@ export default function KYCScreen({ direction, onNext, onBack }) {
         <h1>Verify Your Identity</h1>
         <p className="helper-text">Complete a quick KYC verification. This is a mandatory step.</p>
 
+        <div className="kyc-bank-chip">
+          {bankLogo && <img src={bankLogo} alt={bankName} className="kyc-bank-logo" />}
+          <div className="kyc-bank-text">
+            <span className="kyc-bank-verified-label">Verified by</span>
+            <span className="kyc-bank-name">{bankName}</span>
+          </div>
+        </div>
+
         <div className="kyc-req-card">
           <div className="kyc-req-title">What You'll Need</div>
           {requirements.map((r) => (
@@ -90,9 +112,9 @@ export default function KYCScreen({ direction, onNext, onBack }) {
         </div>
 
         <div className="info-card">
-          <div className="info-row"><span className="label">Name</span><span className="val">Rahul Sharma</span></div>
-          <div className="info-row"><span className="label">PAN</span><span className="val">XXXXX1234X</span></div>
-          <div className="info-row"><span className="label">Aadhaar</span><span className="val">XXXX XXXX 4523</span></div>
+          <div className="info-row"><span className="label">Name</span><span className="val">{customer.name}</span></div>
+          <div className="info-row"><span className="label">PAN</span><span className="val">{customer.pan}</span></div>
+          <div className="info-row"><span className="label">Aadhaar</span><span className="val">{customer.source === 'ntb' ? 'Verified live via Video KYC' : 'XXXX XXXX 4523'}</span></div>
         </div>
 
         <div className="warn-banner">
@@ -125,7 +147,7 @@ export default function KYCScreen({ direction, onNext, onBack }) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
-                    KYC Agent: Priya M.
+                    {bankName} KYC Agent: Priya M.
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -287,9 +309,9 @@ export default function KYCScreen({ direction, onNext, onBack }) {
 
       <div className="info-card">
         <div className="section-title" style={{ marginTop: 0 }}>Verified Details</div>
-        <div className="info-row"><span className="label">Full Name</span><span className="val">Rahul Sharma</span></div>
-        <div className="info-row"><span className="label">Date of Birth</span><span className="val">15 Mar 1992</span></div>
-        <div className="info-row"><span className="label">Address</span><span className="val">Sector 15, Gurugram</span></div>
+        <div className="info-row"><span className="label">Full Name</span><span className="val">{customer.name}</span></div>
+        <div className="info-row"><span className="label">Date of Birth</span><span className="val">{formatDob(customer.dob)}</span></div>
+        <div className="info-row"><span className="label">Address</span><span className="val">{formatAddress(customer)}</span></div>
       </div>
     </ScreenWrapper>
   )

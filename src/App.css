@@ -1,6 +1,54 @@
 .app-wrapper {
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-wrapper .app-shell {
+  flex: 1;
+  height: auto;
+  min-height: 0;
+}
+
+/* Demo-only control for switching between prototype entry points — not part of the product UI.
+   Sits in normal document flow above PhoneFrame so it never overlaps in-app content or header,
+   regardless of whether the current screen shows a header. */
+.demo-entry-switcher {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px;
+  background: rgba(20, 20, 30, 0.85);
+  box-sizing: border-box;
+}
+
+.demo-entry-switcher-inner {
+  display: flex;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 3px;
+}
+
+.demo-entry-switcher button {
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+  border: none;
+  border-radius: 13px;
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.demo-entry-switcher button:hover { color: #fff; }
+.demo-entry-switcher button.active {
+  background: #1FA8E1;
+  color: #fff;
 }

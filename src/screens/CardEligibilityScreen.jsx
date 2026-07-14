@@ -29,11 +29,16 @@ function CardVisual({ id }) {
   )
 }
 
-export default function CardEligibilityScreen({ direction, creditLimit, variants, onSelect, onNext, onBack }) {
+export default function CardEligibilityScreen({ direction, creditLimit, variants, bankName, onSelect, onNext, onBack }) {
   const [activeIdx, setActiveIdx] = useState(0)
   const [swipeDir, setSwipeDir] = useState(1)
   const cardVariant = variants[activeIdx]
   const multiCard = variants.length > 1
+  const tcItems = [
+    ...cardVariant.tc.slice(0, 2),
+    `I authorize ${bankName}'s KYC (CKYC) records to be shared with SBI Card for the purpose of credit card issuance.`,
+    ...cardVariant.tc.slice(2),
+  ]
 
   const [sheet, setSheet] = useState(null) // null | 'tc' | 'otp'
   const [tcAgreed, setTcAgreed] = useState(false)
@@ -243,7 +248,7 @@ export default function CardEligibilityScreen({ direction, creditLimit, variants
                 </button>
               </div>
               <div className="tc-scroll">
-                {cardVariant.tc.map((item, i) => (
+                {tcItems.map((item, i) => (
                   <div className="tc-item" key={i}>
                     <div className="tc-num">{i + 1}.</div>
                     <p className="tc-text">{item}</p>

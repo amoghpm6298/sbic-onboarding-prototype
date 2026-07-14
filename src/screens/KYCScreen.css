@@ -1,4 +1,44 @@
 /* Prep phase */
+.kyc-bank-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0f9ff;
+  border: 1px solid #d6ecfa;
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.kyc-bank-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: #fff;
+}
+
+.kyc-bank-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.kyc-bank-verified-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #1FA8E1;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.kyc-bank-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
 .kyc-req-card {
   background: #f8f9fa;
   border: 1px solid #f0f0f0;

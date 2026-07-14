@@ -1,0 +1,83 @@
+.pd-field {
+  margin-bottom: 16px;
+}
+
+.pd-row {
+  display: flex;
+  gap: 12px;
+}
+.pd-row .pd-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.pd-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.pd-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  background: #f8f9fa;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.pd-input:focus {
+  border-color: #1FA8E1;
+  background: #fff;
+}
+.pd-input::placeholder {
+  color: #bbb;
+  font-weight: 500;
+}
+
+.pd-input-prefix-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 12px;
+  background: #f8f9fa;
+  transition: border-color 0.15s;
+}
+.pd-input-prefix-wrap:focus-within {
+  border-color: #1FA8E1;
+  background: #fff;
+}
+
+.pd-prefix {
+  padding: 0 0 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #999;
+}
+
+.pd-input-prefixed {
+  border: none;
+  background: transparent;
+  padding-left: 8px;
+}
+.pd-input-prefixed:focus { border: none; background: transparent; }
+
+.pd-info-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #888;
+  line-height: 1.5;
+  padding: 4px 0;
+  margin-top: 8px;
+}

@@ -4,17 +4,36 @@ import PhoneFrame from './components/PhoneFrame'
 import Stepper from './components/Stepper'
 import RejectionScreen from './screens/RejectionScreen'
 import EntryScreen from './screens/EntryScreen'
+import LandingScreen from './screens/LandingScreen'
+import PersonalDetailsScreen from './screens/PersonalDetailsScreen'
+import AddressDetailsScreen from './screens/AddressDetailsScreen'
 import BookFDScreen from './screens/BookFDScreen'
 import KYCScreen from './screens/KYCScreen'
 import FDReviewScreen from './screens/FDReviewScreen'
 import PaymentScreen from './screens/PaymentScreen'
+import ProcessingScreen from './screens/ProcessingScreen'
 import CardEligibilityScreen from './screens/CardEligibilityScreen'
 import ConfirmationScreen from './screens/ConfirmationScreen'
 import { EXISTING_FDS } from './data/existingFds'
+import { getBankName } from './data/banks'
 import './App.css'
 
 const STEPS = ['FD Setup', 'KYC', 'Book FD', 'Card', 'Done']
-const STEP_TO_STEPPER = { 2: 1, 3: 2, 4: 3, 5: 3, 7: 4, 8: 5 }
+const STEP_TO_STEPPER = { 2: 1, 3: 2, 4: 3, 5: 3, 6: 4, 7: 4, 8: 5 }
+
+const DEFAULT_FD_CONFIG = { bank: 'SBI', amount: 100000, tenure: 24, mode: 'existing', existingFds: [] }
+
+const EXISTING_CUSTOMER = {
+  name: 'Rahul Sharma', phone: '98XXX XXXX32', email: 'rah***@gmail.com',
+  dob: '1992-03-15', pan: 'XXXXX1234X',
+  addressLine1: 'B-42, Sector 15', addressLine2: '', pincode: '122001', city: 'Gurugram', state: 'Haryana',
+  source: 'existing',
+}
+const BLANK_CUSTOMER = {
+  name: '', phone: '', email: '', dob: '', pan: '',
+  addressLine1: '', addressLine2: '', pincode: '', city: '', state: '',
+  source: 'ntb',
+}
 
 const RATES = {
   SBI: { 6: 6.60, 12: 6.80, 18: 7.00, 24: 7.10, 36: 7.25, 60: 6.50 },
@@ -79,45 +98,55 @@ export function getCardVariant(amount) {
 }
 
 export default function App() {
-  // Step 0 = rejection, 1 = landing, 2-7 = flow
+  // Step 0 = rejection, 1 = entry (existing-applicant persona)
+  // Step 9 = landing, 10 = personal details (general/NTB persona) — converges on step 2
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(1)
-  const [fdConfig, setFdConfig] = useState({
-    bank: 'SBI',
-    amount: 100000,
-    tenure: 24,
-    mode: 'existing', // 'new' | 'existing'
-    existingFds: [],
-  })
+  const [entryPoint, setEntryPoint] = useState('rejected') // 'rejected' | 'ntb'
+  const [fdConfig, setFdConfig] = useState(DEFAULT_FD_CONFIG)
+  const [customer, setCustomer] = useState(EXISTING_CUSTOMER)
   const [selectedCard, setSelectedCard] = useState(null)
+  const isNtb = entryPoint === 'ntb'
 
   const goTo = useCallback((s) => {
-    if (s < 0 || s > 8) return
+    if (s < 0 || s > 11) return
     setDirection(s > step ? 1 : -1)
     setStep(s)
   }, [step])
 
+  const resetEntry = useCallback((point) => {
+    setEntryPoint(point)
+    setFdConfig({ ...DEFAULT_FD_CONFIG })
+    setCustomer(point === 'ntb' ? BLANK_CUSTOMER : EXISTING_CUSTOMER)
+    setDirection(1)
+    setStep(point === 'ntb' ? 9 : 0)
+  }, [])
+
   // KYC is tied to the customer's relationship with the bank, not to any one FD/product —
   // RBI KYC Master Directions 2016 permit reliance on due diligence already performed, and
   // banks in practice (e.g. Axis, IDFC FIRST secured-card flows) skip re-KYC for existing customers.
-  const hasBankRelationship = (EXISTING_FDS[fdConfig.bank] || []).length > 0
+  // A general/NTB visitor has no such relationship with any bank yet, regardless of mock data.
+  const hasBankRelationship = !isNtb && (EXISTING_FDS[fdConfig.bank] || []).length > 0
 
   // Existing-FD path skips partner KYC, the FD review step, and Payment (the FD is already
   // funded) — straight to card eligibility. A brand-new FD with a bank you're already KYC'd
   // with only skips KYC — FDReview + Payment still run since it's genuinely new money.
   const next = useCallback(() => {
-    if (step === 2 && fdConfig.mode === 'existing') { goTo(7); return }
+    if (step === 11) { goTo(2); return }
+    if (step === 2 && fdConfig.mode === 'existing') { goTo(6); return }
     if (step === 2 && fdConfig.mode === 'new' && hasBankRelationship) { goTo(4); return }
+    if (step === 6) { goTo(7); return }
     if (step === 5) { goTo(7); return }
     goTo(step + 1)
   }, [step, goTo, fdConfig.mode, hasBankRelationship])
 
   const back = useCallback(() => {
+    if (step === 2 && isNtb) { goTo(11); return }
     if (step === 7 && fdConfig.mode === 'existing') { goTo(2); return }
     if (step === 7) { goTo(5); return }
     if (step === 4 && fdConfig.mode === 'new' && hasBankRelationship) { goTo(2); return }
     goTo(step - 1)
-  }, [step, goTo, fdConfig.mode, hasBankRelationship])
+  }, [step, goTo, fdConfig.mode, hasBankRelationship, isNtb])
 
   const rate = fdConfig.mode === 'existing'
     ? (fdConfig.existingFds.length
@@ -141,25 +170,36 @@ export default function App() {
     1: <EntryScreen key="entry" direction={direction} onNext={next} />,
     2: <BookFDScreen key="fd-config" direction={direction} fdConfig={fdConfig} setFdConfig={setFdConfig}
          rate={rate} creditLimit={creditLimit} maturity={maturity} cardVariant={eligibleVariant}
-         onNext={next} onBack={back} />,
-    3: <KYCScreen key="kyc" direction={direction} onNext={next} onBack={back} />,
+         isNtb={isNtb} onNext={next} onBack={back} />,
+    3: <KYCScreen key="kyc" direction={direction} customer={customer} bank={fdConfig.bank} onNext={next} onBack={back} />,
     4: <FDReviewScreen key="fd-review" direction={direction} fdConfig={fdConfig}
          rate={rate} creditLimit={creditLimit} maturity={maturity}
          onNext={next} onBack={back} onEdit={() => goTo(2)} />,
     5: <PaymentScreen key="pay" direction={direction} fdConfig={fdConfig} rate={rate}
          creditLimit={creditLimit} maturity={maturity} onNext={next} onBack={back} />,
+    6: <ProcessingScreen key="processing" direction={direction} bankName={getBankName(fdConfig.bank)} onNext={next} />,
     7: <CardEligibilityScreen key="card" direction={direction} creditLimit={creditLimit}
-         variants={availableVariants} onSelect={setSelectedCard} onNext={next} onBack={back} />,
+         variants={availableVariants} bankName={getBankName(fdConfig.bank)} onSelect={setSelectedCard} onNext={next} onBack={back} />,
     8: <ConfirmationScreen key="confirm" direction={direction} fdConfig={fdConfig} rate={rate} goTo={() => goTo(0)} />,
+    9: <LandingScreen key="landing" direction={direction} onNext={next} />,
+    10: <PersonalDetailsScreen key="details" direction={direction} customer={customer} setCustomer={setCustomer} onNext={next} onBack={back} />,
+    11: <AddressDetailsScreen key="address" direction={direction} customer={customer} setCustomer={setCustomer} onNext={next} onBack={back} />,
   }
 
-  // Hide header + stepper on rejection screen
+  // Hide header on rejection screen only; hide stepper on the pre-FD screens (entry/landing/details/address)
   const showHeader = step > 0
+  const showStepperFinal = showStepper && step !== 9 && step !== 10 && step !== 11
 
   return (
     <div className="app-wrapper">
+      <div className="demo-entry-switcher">
+        <div className="demo-entry-switcher-inner">
+          <button className={entryPoint === 'rejected' ? 'active' : ''} onClick={() => resetEntry('rejected')}>Existing</button>
+          <button className={entryPoint === 'ntb' ? 'active' : ''} onClick={() => resetEntry('ntb')}>New (NTB)</button>
+        </div>
+      </div>
       <PhoneFrame
-        stepper={showStepper ? <Stepper steps={STEPS} current={stepperCurrent} /> : null}
+        stepper={showStepperFinal ? <Stepper steps={STEPS} current={stepperCurrent} /> : null}
         showHeader={showHeader}
       >
         <AnimatePresence mode="wait" custom={direction}>
